@@ -22,7 +22,7 @@ public class GameScene implements Scene {
         font = new BitmapFont(Gdx.files.internal("fonts/arial-15.fnt"));
         font.setColor(1, 1, 1, 1);
         this.world = new World();
-        this.texture = new Texture(Gdx.files.internal("sketch_gg_w.png"));
+        this.texture = new Texture(Gdx.files.internal("sketch_gg_w_64.png"));
     }
 
     @Override
