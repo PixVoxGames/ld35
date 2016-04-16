@@ -1,6 +1,9 @@
 package com.pixvoxsoftware.ld35;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector3;
 
 public class FollowCamera extends OrthographicCamera {
     private Entity target;
@@ -32,12 +35,14 @@ public class FollowCamera extends OrthographicCamera {
             AnimatedSprite sprite = target.getSprite();
             float x = sprite.getX() + sprite.getWidth() / 2;
             float y = sprite.getY() + sprite.getHeight() / 2;
-            if (x < minX) { x = minX;}
-            else if (x > maxX) { x = maxX;}
-            if (y < minY) { y = minY;}
-            else if (y > maxY) { y = maxY;}
 
-            position.set(x, y, 1);
+            float speed = 7f;
+            float dt = Gdx.graphics.getDeltaTime();
+            position.x += (x - position.x) * speed * dt;
+            position.y += (y - position.y) * speed * dt;
+
+            position.x = MathUtils.clamp(position.x, minX, maxX);
+            position.y = MathUtils.clamp(position.y, minY, maxY);
         }
     }
 
