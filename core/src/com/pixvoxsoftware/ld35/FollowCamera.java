@@ -25,7 +25,7 @@ public class FollowCamera extends OrthographicCamera {
         if (target != null) {
             // because it's a rectangle, we need to lookAt his center
             // z-coordinate doesn't matter, because of orthographic projection
-            Sprite sprite = target.getSprite();
+            AnimatedSprite sprite = target.getSprite();
             position.set(
                     sprite.getX() + sprite.getWidth() / 2,
                     sprite.getY() + sprite.getHeight() / 2,

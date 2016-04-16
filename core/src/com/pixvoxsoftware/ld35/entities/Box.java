@@ -1,14 +1,13 @@
 package com.pixvoxsoftware.ld35.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.pixvoxsoftware.ld35.AnimatedSprite;
 import com.pixvoxsoftware.ld35.Entity;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
 
 public class Box extends Entity {
     public Box(float x, float y) {
-        sprite = new Sprite(new Texture(Gdx.files.internal("sketch_gg_w.png")));
+        sprite = new AnimatedSprite(Gdx.files.internal("sketch_gg_w.png"), 1);
     }
 
     @Override

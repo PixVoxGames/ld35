@@ -2,13 +2,13 @@ package com.pixvoxsoftware.ld35.controllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.pixvoxsoftware.ld35.AnimatedSprite;
 import com.pixvoxsoftware.ld35.Entity;
 import com.pixvoxsoftware.ld35.Player;
 
 public class PlayerController extends EntityController {
     private EntityController consumedSoulController;
-    private Sprite playerSprite;
+    private AnimatedSprite playerSprite;
 
     @Override
     public void act(Entity entity) {

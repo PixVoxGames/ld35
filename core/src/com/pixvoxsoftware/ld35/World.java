@@ -1,10 +1,8 @@
 package com.pixvoxsoftware.ld35;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Vector2;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
 import com.pixvoxsoftware.ld35.controllers.PlayerController;
 import com.pixvoxsoftware.ld35.entities.Box;

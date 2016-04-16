@@ -22,7 +22,7 @@ public class Player extends Entity {
 
 
     public Player(float x, float y) {
-        sprite = new Sprite(new Texture(Gdx.files.internal("sketch_gg_w_64.png")));
+        sprite = new AnimatedSprite(Gdx.files.internal("gg_w/out.jpg"), 12, 0.05f);
         state = State.IDLE;
         direction = 0f;
         controller = new PlayerController();

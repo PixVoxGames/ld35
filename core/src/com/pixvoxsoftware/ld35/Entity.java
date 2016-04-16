@@ -1,13 +1,11 @@
 package com.pixvoxsoftware.ld35;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
 
 public abstract class Entity {
     protected boolean visible = true;
     protected EntityController controller;
-    protected Sprite sprite;
+    protected AnimatedSprite sprite;
     protected boolean killed = false;
 
     public boolean isKilled() {
@@ -18,11 +16,11 @@ public abstract class Entity {
         killed = true;
     }
 
-    public Sprite getSprite() {
+    public AnimatedSprite getSprite() {
         return sprite;
     }
 
-    public void setSprite(Sprite sprite) {
+    public void setSprite(AnimatedSprite sprite) {
         this.sprite = sprite;
     }
 
