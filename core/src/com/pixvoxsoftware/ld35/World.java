@@ -1,6 +1,5 @@
 package com.pixvoxsoftware.ld35;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.pixvoxsoftware.ld35.entities.Box;
 
