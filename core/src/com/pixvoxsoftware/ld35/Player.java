@@ -2,6 +2,9 @@ package com.pixvoxsoftware.ld35;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.pixvoxsoftware.ld35.controllers.EntityController;
+import com.pixvoxsoftware.ld35.controllers.PlayerController;
 
 public class Player extends Entity {
 
@@ -13,16 +16,17 @@ public class Player extends Entity {
         MOVE
     }
 
-    private Texture texture;
+    private Sprite sprite;
 
     private float direction;
     private State state;
+    private PlayerController controller = new PlayerController();
 
     public Player(float x, float y) {
-        setPosition(x, y);
+        sprite = new Sprite(new Texture(Gdx.files.internal("sketch_gg_w_64.png")));
         state = State.IDLE;
         direction = 0f;
-        texture = new Texture(Gdx.files.internal("sketch_gg_w_64.png"));
+        setPosition(x, y);
     }
 
     public State getState() {
@@ -42,18 +46,16 @@ public class Player extends Entity {
     }
 
     public void setPosition(float x, float y) {
-        position.set(x, y);
+        sprite.setPosition(x, y);
     }
 
     @Override
-    public Texture getTexture() {
-        return texture;
+    public Sprite getSprite() {
+        return sprite;
     }
 
     @Override
-    public void act() {
-        if (getState() == Player.State.MOVE) {
-            setX(getX() + getDirection() * Gdx.graphics.getDeltaTime() * 100);
-        }
+    public EntityController getController() {
+        return controller;
     }
 }

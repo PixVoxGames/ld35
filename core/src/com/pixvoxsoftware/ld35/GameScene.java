@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
+
 
 public class GameScene implements Scene {
 
@@ -44,7 +46,8 @@ public class GameScene implements Scene {
 
         spriteBatch.begin();
         for (Entity entity : world.getEntities()) {
-            spriteBatch.draw(entity.getTexture(), entity.getX(), entity.getY());
+            entity.getSprite().draw(spriteBatch);
+//            spriteBatch.draw(entity.getSprite(), entity.getX(), entity.getY());
         }
         spriteBatch.end();
 
@@ -81,7 +84,11 @@ public class GameScene implements Scene {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        int x1 = Gdx.input.getX();
+        int y1 = Gdx.input.getY();
+        Vector3 input = new Vector3(x1, y1, 0);
+        cam.unproject(input);
+        return world.touchDown(input.x, input.y, pointer, button);
     }
 
     @Override

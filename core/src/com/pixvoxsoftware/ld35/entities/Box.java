@@ -2,23 +2,24 @@ package com.pixvoxsoftware.ld35.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.pixvoxsoftware.ld35.Entity;
+import com.pixvoxsoftware.ld35.controllers.EntityController;
 
 public class Box extends Entity {
-    private Texture texture;
+    private Sprite sprite;
 
     public Box(float x, float y) {
-        texture = new Texture(Gdx.files.internal("sketch_gg_w.png"));
+        sprite = new Sprite(new Texture(Gdx.files.internal("sketch_gg_w.png")));
     }
 
     @Override
-    public void act() {
-
+    public Sprite getSprite() {
+        return sprite;
     }
 
     @Override
-    public Texture getTexture() {
-        return texture;
+    public EntityController getController() {
+        return null;
     }
 }

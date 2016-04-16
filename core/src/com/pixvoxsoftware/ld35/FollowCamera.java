@@ -1,6 +1,7 @@
 package com.pixvoxsoftware.ld35;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class FollowCamera extends OrthographicCamera {
     private Entity target;
@@ -23,10 +24,11 @@ public class FollowCamera extends OrthographicCamera {
         super.update();
         if (target != null) {
             // because it's a rectangle, we need to lookAt his center
-            // z-coordinate doesn't matters, because ortho-projection
+            // z-coordinate doesn't matter, because of orthographic projection
+            Sprite sprite = target.getSprite();
             position.set(
-                    target.getX() + target.getTexture().getWidth() / 2,
-                    target.getY() + target.getTexture().getHeight() / 2,
+                    sprite.getX() + sprite.getWidth() / 2,
+                    sprite.getY() + sprite.getHeight() / 2,
                     1
             );
         };

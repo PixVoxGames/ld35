@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Vector2;
+import com.pixvoxsoftware.ld35.controllers.EntityController;
+import com.pixvoxsoftware.ld35.controllers.PlayerController;
 import com.pixvoxsoftware.ld35.entities.Box;
 
 import java.util.ArrayList;
@@ -16,15 +19,26 @@ public class World {
 
     public World() {
         player = new Player(0, 0);
-        entities.add(player);
-        entities.add(new Box(-10, -10));
         map = new TmxMapLoader().load("map.tmx");
+        addEntity(player);
+        addEntity(new Box(-10, -10));
     }
 
     public void act() {
         for (Entity entity : entities) {
-            entity.act();
+            EntityController controller = entity.getController();
+            if (controller != null) {
+                controller.act(entity);
+            }
         }
+    }
+
+    public void addEntity(Entity e) {
+        EntityController controller = e.getController();
+        if (controller != null) {
+            controller.setWorld(this);
+        }
+        entities.add(e);
     }
 
     public TiledMap getMap() {
@@ -36,84 +50,40 @@ public class World {
     }
 
     public boolean onKeyPressed(int keycode) {
-        switch (keycode) {
-            case Input.Keys.W:
-                // Jump
-//                player.setY(player.getY() + Gdx.graphics.getDeltaTime()*30);
+        for (Entity entity : entities) {
+            EntityController controller = entity.getController();
+            if (controller != null && controller.onKeyPressed(entity, keycode)) {
                 return true;
-
-            case Input.Keys.S:
-                // Nothing
-                return true;
-
-            case Input.Keys.A:
-                // Move left
-                switch (player.getState()) {
-                    case IDLE:
-                        player.setState(Player.State.MOVE);
-                        player.setDirection(Player.DIRECTION_LEFT);
-                    case MOVE:
-                        if (player.getDirection() != Player.DIRECTION_LEFT) {
-                            player.setState(Player.State.IDLE);
-                        }
-                }
-                return true;
-
-            case Input.Keys.D:
-                // Move right
-                switch (player.getState()) {
-                    case IDLE:
-                        player.setState(Player.State.MOVE);
-                        player.setDirection(Player.DIRECTION_RIGHT);
-                    case MOVE:
-                        if (player.getDirection() != Player.DIRECTION_RIGHT) {
-                            player.setState(Player.State.IDLE);
-                        }
-                }
-                return true;
-
-            default:
-                break;
+            }
         }
         return false;
     }
 
     public boolean onKeyReleased(int keycode) {
-        switch (keycode) {
-            case Input.Keys.A:
-                switch (player.getState()) {
-                    case IDLE:
-                        player.setState(Player.State.MOVE);
-                        if (player.getDirection() == Player.DIRECTION_LEFT) {
-                            player.setDirection(-player.getDirection());  // opposite direction
-                        }
-                        break;
-                    case MOVE:
-                        player.setState(Player.State.IDLE);
-                        player.setDirection(0f);
-                        break;
-                }
+        for (Entity entity : entities) {
+            EntityController controller = entity.getController();
+            if (controller != null && controller.onKeyReleased(entity, keycode)) {
                 return true;
-
-            case Input.Keys.D:
-                switch (player.getState()) {
-                    case IDLE:
-                        player.setState(Player.State.MOVE);
-                        if (player.getDirection() == Player.DIRECTION_RIGHT) {
-                            player.setDirection(-player.getDirection());  // opposite direction
-                        }
-                        break;
-                    case MOVE:
-                        player.setState(Player.State.IDLE);
-                        player.setDirection(0f);
-                        break;
-                }
-                return true;
+            }
         }
         return false;
     }
 
+    public boolean touchDown(float worldX, float worldY, int pointer, int button) {
+        PlayerController playerController = (PlayerController) player.getController();
+        return playerController.onTouchDown(player, worldX, worldY, pointer, button);
+    }
+
     public ArrayList<Entity> getEntities() {
         return entities;
+    }
+
+    public Entity getFirstEntityWithPoint(float x, float y) {
+        for (Entity entity : entities) {
+            if (entity.getSprite().getBoundingRectangle().contains(x, y)) {
+                return entity;
+            }
+        }
+        return null;
     }
 }
