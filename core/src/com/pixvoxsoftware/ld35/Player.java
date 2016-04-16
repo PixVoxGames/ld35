@@ -10,22 +10,22 @@ public class Player extends Entity {
 
     public final static float DIRECTION_RIGHT = 1f;
     public final static float DIRECTION_LEFT = -1f;
+    private Entity consumedSoul = null;
 
     public enum State {
         IDLE,
         MOVE
     }
 
-    private Sprite sprite;
-
     private float direction;
     private State state;
-    private PlayerController controller = new PlayerController();
+
 
     public Player(float x, float y) {
         sprite = new Sprite(new Texture(Gdx.files.internal("sketch_gg_w_64.png")));
         state = State.IDLE;
         direction = 0f;
+        controller = new PlayerController();
         setPosition(x, y);
     }
 
@@ -49,13 +49,11 @@ public class Player extends Entity {
         sprite.setPosition(x, y);
     }
 
-    @Override
-    public Sprite getSprite() {
-        return sprite;
+    public void setConsumedSoul(Entity consumedSoul) {
+        this.consumedSoul = consumedSoul;
     }
 
-    @Override
-    public EntityController getController() {
-        return controller;
+    public Entity getConsumedSoul() {
+        return consumedSoul;
     }
 }

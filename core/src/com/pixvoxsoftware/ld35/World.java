@@ -10,6 +10,7 @@ import com.pixvoxsoftware.ld35.controllers.PlayerController;
 import com.pixvoxsoftware.ld35.entities.Box;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class World {
 
@@ -25,10 +26,16 @@ public class World {
     }
 
     public void act() {
-        for (Entity entity : entities) {
-            EntityController controller = entity.getController();
-            if (controller != null) {
-                controller.act(entity);
+        for (Iterator<Entity> iterator = entities.iterator(); iterator.hasNext();) {
+            Entity entity = iterator.next();
+            // if entity is killed, remove it
+            if (entity.isKilled()) {
+                iterator.remove();
+            } else {
+                EntityController controller = entity.getController();
+                if (controller != null) {
+                    controller.act(entity);
+                }
             }
         }
     }
@@ -85,5 +92,11 @@ public class World {
             }
         }
         return null;
+    }
+
+    public String[] getDebugStrings() {
+        return new String[] {
+                "consumed soul: " + Boolean.toString(player.getConsumedSoul() != null),
+        };
     }
 }

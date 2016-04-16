@@ -46,8 +46,9 @@ public class GameScene implements Scene {
 
         spriteBatch.begin();
         for (Entity entity : world.getEntities()) {
-            entity.getSprite().draw(spriteBatch);
-//            spriteBatch.draw(entity.getSprite(), entity.getX(), entity.getY());
+            if (entity.isVisible()) {
+                entity.getSprite().draw(spriteBatch);
+            }
         }
         spriteBatch.end();
 
@@ -60,6 +61,12 @@ public class GameScene implements Scene {
         fontBatch.begin();
         font.draw(fontBatch, "fps: " + Integer.toString(Gdx.graphics.getFramesPerSecond()), 2, Gdx.graphics.getHeight() - 2);
         font.draw(fontBatch, "entities count: " + Integer.toString(world.getEntities().size()), 2, Gdx.graphics.getHeight() - 19);
+        int offset = -36;
+        String[] debugStrings = world.getDebugStrings();
+        for (int i = 0; i < debugStrings.length; i++) {
+            font.draw(fontBatch, debugStrings[i], 2, Gdx.graphics.getHeight() + offset);
+            offset -= 17;
+        }
         fontBatch.end();
     }
 

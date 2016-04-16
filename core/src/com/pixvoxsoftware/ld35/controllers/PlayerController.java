@@ -2,21 +2,75 @@ package com.pixvoxsoftware.ld35.controllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.pixvoxsoftware.ld35.Entity;
 import com.pixvoxsoftware.ld35.Player;
 
 public class PlayerController extends EntityController {
+    private EntityController consumedSoulController;
+    private Sprite playerSprite;
+
     @Override
     public void act(Entity entity) {
-        Player player = (Player) entity;
-        if (player.getState() == Player.State.MOVE) {
-            player.getSprite().setX(player.getSprite().getX() + player.getDirection() * Gdx.graphics.getDeltaTime() * 100);
+        if (entity instanceof Player) {
+            Player player = (Player) entity;
+            Entity consumedSoul = player.getConsumedSoul();
+            if (player.getState() == Player.State.MOVE) {
+                if (consumedSoul != null) {
+                    // now consumed soul sprite == player sprite
+                    consumedSoul.getSprite().setX(
+                        consumedSoul.getSprite().getX() + player.getDirection() * Gdx.graphics.getDeltaTime() * 100
+                    );
+                } else {
+                    player.getSprite().setX(player.getSprite().getX() + player.getDirection() * Gdx.graphics.getDeltaTime() * 100);
+                }
+            }
+        } else {
+            // it's consumed soul, what we need to do here?
         }
     }
 
     public boolean onTouchDown(Player player, float worldX, float worldY, int pointer, int button) {
         Entity entity = world.getFirstEntityWithPoint(worldX, worldY);
-        System.out.println(entity);
+        if (entity != null && canConsumeSoul(entity)) {
+            consumeSoul(player, entity);
+        }
+        return true;
+    }
+
+    private void consumeSoul(Player player, Entity entity) {
+        player.setConsumedSoul(entity);
+        player.setVisible(false);
+        // save controller for disable actions of consumed soul
+        consumedSoulController = entity.getController();
+        entity.setController(this);
+        playerSprite = player.getSprite();
+        player.setSprite(entity.getSprite());
+        player.setConsumedSoul(entity);
+    }
+
+    private void spitSoul(Player player) {
+        if (player.getConsumedSoul() == null) {
+            return;
+        }
+
+        playerSprite.setPosition(player.getSprite().getX(), player.getSprite().getY());
+        player.setSprite(playerSprite);
+        player.setVisible(true);
+
+        if (canEntitySurviveAfterSpit(player.getConsumedSoul())) {
+            player.getConsumedSoul().setController(consumedSoulController);
+        } else {
+            player.getConsumedSoul().kill();
+        }
+        player.setConsumedSoul(null);
+    }
+
+    private boolean canEntitySurviveAfterSpit(Entity e) {
+        return true;
+    }
+
+    private boolean canConsumeSoul(Entity entity) {
         return true;
     }
 
@@ -24,6 +78,9 @@ public class PlayerController extends EntityController {
     public boolean onKeyPressed(Entity entity, int keycode) {
         Player player = (Player) entity;
         switch (keycode) {
+            case Input.Keys.E:
+                spitSoul(player);
+                return true;
             case Input.Keys.W:
                 // Jump
 //                player.setY(player.getY() + Gdx.graphics.getDeltaTime()*30);
