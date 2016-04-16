@@ -71,8 +71,8 @@ public class GameScene implements Scene {
         }
         staticSpritesBatch.end();
 
-//        mapRenderer.setView(cam);
-//        mapRenderer.render();
+        mapRenderer.setView(cam);
+        mapRenderer.render();
 
         spriteBatch.begin();
         for (Entity entity : world.getEntities()) {

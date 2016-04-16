@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="17" height="11" tilewidth="16" tileheight="16">
- <tileset firstgid="1" name="desert_palace_tiles" tilewidth="16" tileheight="16" spacing="1">
-  <image source="desert_palace_tiles.png" width="427" height="325"/>
+<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="320" height="640"/>
  </tileset>
- <layer name="Tile Layer 1" width="17" height="11">
+ <layer name="Background" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJyl0EkOAVEURuGnXQSKRZCwDBaBlCbBApTomxFzvREr0I1YmDOoSm4qVYP3DL7Jf5MzuBGlVBQxV1zooIueb/ckkEQKaWRclrDAEivf7skihzwKaKKloY0iSqIxxkTDVDRmmBs21tjggKNh44ob7ngYNj74/vmPMiqiscVOw140qqihHuCEMy4hdxsN9OFgEOCJF94h9yFG+AF0YFBA
+   eJytzi8TAVEUh+G7LMWfVairUlel2kqlUncrlUqlrkrdrbsfzRtvYO7Mnd+ZedqZ95zAGNMyuumhL+yNMRH2YkyFvRnmwl6ChbC3xErYWyMV9jbYCns77IW9A47CXoZc2DvhLOxdcHXstBGig65j94a7Y2eAISKMHLsPPD1/+TUFXh6/2Hft+298PP6w79r3S1QevX9ToxH2vmJmEB8=
   </data>
  </layer>
+ <objectgroup name="Physics" width="20" height="20">
+  <object x="0" y="0" width="64" height="640"/>
+  <object x="129" y="492" width="127" height="43"/>
+  <object x="289" y="427" width="126" height="45"/>
+  <object x="449" y="523" width="192" height="32"/>
+ </objectgroup>
 </map>
