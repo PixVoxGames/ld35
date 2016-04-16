@@ -48,7 +48,7 @@ public class GameWorld {
             platformBody.createFixture(platformBox, 0.0f).setUserData(new Entity() {
                 @Override
                 public boolean isGround() {
-                    return false;
+                    return true;
                 }
             });
             platformBox.dispose();

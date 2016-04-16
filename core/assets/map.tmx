@@ -17,6 +17,6 @@
  <objectgroup name="Entities" width="20" height="20">
   <object type="Lamp" x="320" y="320" width="32" height="96"/>
   <object x="512" y="416" width="32" height="96"/>
-  <object name="Spawn" type="SpawnPoint" x="192" y="448"/>
+  <object name="Spawn" type="SpawnPoint" x="192" y="256"/>
  </objectgroup>
 </map>
