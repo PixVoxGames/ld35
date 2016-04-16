@@ -3,6 +3,7 @@ package com.pixvoxsoftware.ld35;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -12,25 +13,36 @@ import com.badlogic.gdx.math.Vector3;
 public class GameScene implements Scene {
 
     private SpriteBatch spriteBatch;
+    private SpriteBatch staticSpritesBatch;
     private SpriteBatch fontBatch;
     private BitmapFont font;
     private FollowCamera cam;
     private OrthogonalTiledMapRenderer mapRenderer;
 
+    private ParallaxBackground background;
+
     private World world;
     private boolean renderDebugText = true;
+
+    private float SCREEN_WIDTH, SCREEN_HEIGHT;
 
     public GameScene() {
         spriteBatch = new SpriteBatch();
         fontBatch = new SpriteBatch();
+        staticSpritesBatch = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal("fonts/arial-15.fnt"));
         font.setColor(1, 1, 1, 1);
         world = new World();
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
-        cam = new FollowCamera(w, h, world.getPlayer());
+        SCREEN_WIDTH = Gdx.graphics.getWidth();
+        SCREEN_HEIGHT = Gdx.graphics.getHeight();
+        cam = new FollowCamera(SCREEN_WIDTH, SCREEN_HEIGHT, world.getPlayer());
+        cam.setBounds(0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2);
 
         mapRenderer = new OrthogonalTiledMapRenderer(world.getMap());
+        background = new ParallaxBackground(cam);
+        background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/wall.png")), 0.1f));
+        background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/light.png")), 0.5f));
+        background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/rocks.png")), 0.9f));
     }
 
     @Override
@@ -38,8 +50,23 @@ public class GameScene implements Scene {
         world.act();
         cam.update();
         spriteBatch.setProjectionMatrix(cam.combined);
+        background.update(cam);
 
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        staticSpritesBatch.begin();
+        for (ParallaxLayer layer : background.getLayers()) {
+            staticSpritesBatch.draw(layer.getTexture(),
+                    0,
+                    0,
+                    SCREEN_WIDTH,
+                    SCREEN_HEIGHT,
+                    layer.getX(),
+                    1f,
+                    layer.getX()+1f,
+                    0f);
+        }
+        staticSpritesBatch.end();
 
         mapRenderer.setView(cam);
         mapRenderer.render();

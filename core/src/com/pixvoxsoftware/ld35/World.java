@@ -1,6 +1,5 @@
 package com.pixvoxsoftware.ld35;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
