@@ -11,9 +11,9 @@ public class GroundCheckContactListener implements ContactListener {
         Entity entityA = (Entity) contact.getFixtureA().getUserData();
         Entity entityB = (Entity) contact.getFixtureB().getUserData();
 
-        if (entityA.isGround()) {
+        if (entityA.isGround() && contact.getFixtureB().isSensor()) {
             entityB.groundedChecks += 1;
-        } else if (entityB.isGround()) {
+        } else if (entityB.isGround() && contact.getFixtureA().isSensor()) {
             entityA.groundedChecks += 1;
         }
     }
@@ -23,9 +23,9 @@ public class GroundCheckContactListener implements ContactListener {
         Entity entityA = (Entity) contact.getFixtureA().getUserData();
         Entity entityB = (Entity) contact.getFixtureB().getUserData();
 
-        if (entityA.isGround()) {
+        if (entityA.isGround() && contact.getFixtureB().isSensor()) {
             entityB.groundedChecks -= 1;
-        } else if (entityB.isGround()) {
+        } else if (entityB.isGround() && contact.getFixtureA().isSensor()) {
             entityA.groundedChecks -= 1;
         }
     }

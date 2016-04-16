@@ -9,6 +9,7 @@ public class Player extends Entity {
     public final static float DIRECTION_RIGHT = 1f;
     public final static float DIRECTION_LEFT = -1f;
     private Entity consumedSoul = null;
+    public boolean isJumping = false;
 
     public enum State {
         IDLE,

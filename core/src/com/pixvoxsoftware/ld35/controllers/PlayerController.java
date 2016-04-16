@@ -25,9 +25,20 @@ public class PlayerController extends EntityController {
             } else {
                 physicsBody = player.physicsBody;
             }
+
+            // movement
             float desiredVelocity = 100 * player.getDirection();
             float impulse = physicsBody.getMass() * (desiredVelocity - physicsBody.getLinearVelocity().x);
             physicsBody.applyLinearImpulse(new Vector2(impulse, 0), physicsBody.getWorldCenter(), true);
+
+            // jumping, just doing the same thing, but by y-axis
+            if (player.isJumping) {
+                if (player.canJump()) {
+                    desiredVelocity = 100;
+                    impulse = player.physicsBody.getMass() * (desiredVelocity - player.physicsBody.getLinearVelocity().y);
+                    physicsBody.applyLinearImpulse(new Vector2(0, impulse), player.physicsBody.getWorldCenter(), true);
+                }
+            }
         } else {
             // it's consumed soul, what we need to do here?
         }
@@ -69,14 +80,6 @@ public class PlayerController extends EntityController {
         player.setConsumedSoul(null);
     }
 
-    private void jump(Player player) {
-        if (player.canJump()) {
-            float desiredVelocity = 100;
-            float impulse = player.physicsBody.getMass() * (desiredVelocity - player.physicsBody.getLinearVelocity().y);
-            player.physicsBody.applyLinearImpulse(new Vector2(0, impulse), player.physicsBody.getWorldCenter(), true);
-        }
-    }
-
     private boolean canEntitySurviveAfterSpit(Entity e) {
         return true;
     }
@@ -94,7 +97,7 @@ public class PlayerController extends EntityController {
                 return true;
             case Input.Keys.W:
             case Input.Keys.SPACE:
-                jump(player);
+                player.isJumping = true;
                 return true;
 
             case Input.Keys.S:
@@ -164,6 +167,10 @@ public class PlayerController extends EntityController {
                         player.setDirection(0f);
                         break;
                 }
+                return true;
+            case Input.Keys.W:
+            case Input.Keys.SPACE:
+                player.isJumping = false;
                 return true;
         }
         return false;

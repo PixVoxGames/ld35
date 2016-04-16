@@ -69,7 +69,7 @@ public abstract class Entity {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = polygonShape;
-        fixtureDef.density = 1f;
+        fixtureDef.density = 0.01f;
         fixtureDef.friction = 0.0f;
         fixtureDef.restitution = 0.6f;
 
@@ -78,7 +78,7 @@ public abstract class Entity {
         polygonShape.dispose();
 
         PolygonShape footShape = new PolygonShape();
-        footShape.setAsBox(sprite.getWidth() / 2, 2, new Vector2(0, -sprite.getHeight() / 2 - 2), 0);
+        footShape.setAsBox(0.9f * sprite.getWidth() / 2, 2, new Vector2(0, -sprite.getHeight() / 2 - 2), 0);
 
         FixtureDef footFixtureDef = new FixtureDef();
         footFixtureDef.shape = footShape;
