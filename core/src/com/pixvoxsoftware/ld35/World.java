@@ -3,25 +3,26 @@ package com.pixvoxsoftware.ld35;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+import java.util.ArrayList;
+
 public class World {
 
     private Player player;
+    private ArrayList<Entity> entities = new ArrayList<>();
 
     public World() {
-        this.player = new Player(0, 0);
+        player = new Player(0, 0);
+        entities.add(player);
     }
 
     public void act() {
-        if (player.getState() == Player.State.MOVE) {
-            this.player.setX(this.player.getX() +
-                    this.player.getDirection() * Gdx.graphics.getDeltaTime()*100);
-
+        for (Entity entity : entities) {
+            entity.act();
         }
-
     }
 
     public Player getPlayer() {
-        return this.player;
+        return player;
     }
 
     public boolean onKeyPressed(int keycode) {

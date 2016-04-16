@@ -1,11 +1,23 @@
 package com.pixvoxsoftware.ld35;
 
-public class Player {
+import com.badlogic.gdx.Gdx;
 
-    public final static float DIRECTION_RIGHT = 1f,
-                        DIRECTION_LEFT = -1f;
+public class Player implements Entity {
 
-    public enum State{IDLE, MOVE}
+    public final static float DIRECTION_RIGHT = 1f;
+    public final static float DIRECTION_LEFT = -1f;
+
+    @Override
+    public void act() {
+        if (getState() == Player.State.MOVE) {
+           setX(getX() + getDirection() * Gdx.graphics.getDeltaTime() * 100);
+        }
+    }
+
+    public enum State {
+        IDLE,
+        MOVE
+    }
 
     private float x, y;
     private float direction;
