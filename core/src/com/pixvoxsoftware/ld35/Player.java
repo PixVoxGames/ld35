@@ -1,9 +1,7 @@
 package com.pixvoxsoftware.ld35;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.pixvoxsoftware.ld35.controllers.EntityController;
+import com.badlogic.gdx.physics.box2d.*;
 import com.pixvoxsoftware.ld35.controllers.PlayerController;
 
 public class Player extends Entity {
@@ -21,10 +19,12 @@ public class Player extends Entity {
     private State state;
 
 
-    public Player(float x, float y) {
-        sprite = new AnimatedSprite(Gdx.files.internal("gg_w/out.jpg"), 12, 0.05f);
+    public Player(GameWorld world, float x, float y) {
+        this.world = world;
+        sprite = new AnimatedSprite(Gdx.files.internal("gg_w/out.png"), 12, 0.05f);
         state = State.IDLE;
         direction = 0f;
+        createPhysicsBody();
         controller = new PlayerController();
         setPosition(x, y);
     }
@@ -46,7 +46,7 @@ public class Player extends Entity {
     }
 
     public void setPosition(float x, float y) {
-        sprite.setPosition(x, y);
+        physicsBody.setTransform(x, y, 0);
     }
 
     public void setConsumedSoul(Entity consumedSoul) {
@@ -55,5 +55,10 @@ public class Player extends Entity {
 
     public Entity getConsumedSoul() {
         return consumedSoul;
+    }
+
+    @Override
+    public boolean isGroundContactCheckNeeded() {
+        return true;
     }
 }

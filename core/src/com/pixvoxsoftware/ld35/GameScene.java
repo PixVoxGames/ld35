@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 
 public class GameScene implements Scene {
@@ -17,12 +18,14 @@ public class GameScene implements Scene {
     private SpriteBatch fontBatch;
     private BitmapFont font;
     private FollowCamera cam;
+    private Box2DDebugRenderer debugRenderer;
     private OrthogonalTiledMapRenderer mapRenderer;
 
     private ParallaxBackground background;
 
-    private World world;
+    private GameWorld world;
     private boolean renderDebugText = true;
+    private boolean renderDebugPhysics = true;
 
     private float SCREEN_WIDTH, SCREEN_HEIGHT;
 
@@ -32,12 +35,12 @@ public class GameScene implements Scene {
         staticSpritesBatch = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal("fonts/arial-15.fnt"));
         font.setColor(1, 1, 1, 1);
-        world = new World();
+        world = new GameWorld();
         SCREEN_WIDTH = Gdx.graphics.getWidth();
         SCREEN_HEIGHT = Gdx.graphics.getHeight();
         cam = new FollowCamera(SCREEN_WIDTH, SCREEN_HEIGHT, world.getPlayer());
         cam.setBounds(0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2);
-
+        debugRenderer = new Box2DDebugRenderer();
         mapRenderer = new OrthogonalTiledMapRenderer(world.getMap());
         background = new ParallaxBackground(cam);
         background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/wall.png")), 0.1f));
@@ -68,8 +71,8 @@ public class GameScene implements Scene {
         }
         staticSpritesBatch.end();
 
-        mapRenderer.setView(cam);
-        mapRenderer.render();
+//        mapRenderer.setView(cam);
+//        mapRenderer.render();
 
         spriteBatch.begin();
         for (Entity entity : world.getEntities()) {
@@ -78,6 +81,10 @@ public class GameScene implements Scene {
             }
         }
         spriteBatch.end();
+
+        if (renderDebugPhysics) {
+            debugRenderer.render(world.physicsWorld, cam.combined);
+        }
 
         if (renderDebugText) {
             drawDebugText();
@@ -101,6 +108,9 @@ public class GameScene implements Scene {
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.F5) {
             renderDebugText = !renderDebugText;
+            return true;
+        } else if (keycode == Input.Keys.F6) {
+            renderDebugPhysics= !renderDebugPhysics;
             return true;
         }
         return world.onKeyPressed(keycode);

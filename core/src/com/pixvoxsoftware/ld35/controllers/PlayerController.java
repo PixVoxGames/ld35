@@ -2,6 +2,8 @@ package com.pixvoxsoftware.ld35.controllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.pixvoxsoftware.ld35.AnimatedSprite;
 import com.pixvoxsoftware.ld35.Entity;
 import com.pixvoxsoftware.ld35.Player;
@@ -12,26 +14,27 @@ public class PlayerController extends EntityController {
 
     @Override
     public void act(Entity entity) {
+        super.act(entity);
         if (entity instanceof Player) {
             Player player = (Player) entity;
             Entity consumedSoul = player.getConsumedSoul();
-            if (player.getState() == Player.State.MOVE) {
-                if (consumedSoul != null) {
-                    // now consumed soul sprite == player sprite
-                    consumedSoul.getSprite().setX(
-                        consumedSoul.getSprite().getX() + player.getDirection() * Gdx.graphics.getDeltaTime() * 100
-                    );
-                } else {
-                    player.getSprite().setX(player.getSprite().getX() + player.getDirection() * Gdx.graphics.getDeltaTime() * 100);
-                }
+            Body physicsBody;
+            if (consumedSoul != null) {
+                // now consumed soul sprite == player sprite
+                physicsBody = consumedSoul.physicsBody;
+            } else {
+                physicsBody = player.physicsBody;
             }
+            float desiredVelocity = 100 * player.getDirection();
+            float impulse = physicsBody.getMass() * (desiredVelocity - physicsBody.getLinearVelocity().x);
+            physicsBody.applyLinearImpulse(new Vector2(impulse, 0), physicsBody.getWorldCenter(), true);
         } else {
             // it's consumed soul, what we need to do here?
         }
     }
 
     public boolean onTouchDown(Player player, float worldX, float worldY, int pointer, int button) {
-        Entity entity = world.getFirstEntityWithPoint(worldX, worldY);
+        Entity entity = player.world.getFirstEntityWithPoint(worldX, worldY);
         if (entity != null && canConsumeSoul(entity)) {
             consumeSoul(player, entity);
         }

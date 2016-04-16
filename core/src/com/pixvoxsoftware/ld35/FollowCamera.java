@@ -1,7 +1,6 @@
 package com.pixvoxsoftware.ld35;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class FollowCamera extends OrthographicCamera {
     private Entity target;
