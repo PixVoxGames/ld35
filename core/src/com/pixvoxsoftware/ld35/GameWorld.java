@@ -23,7 +23,7 @@ public class GameWorld {
     public World physicsWorld;
 
     public GameWorld() {
-        physicsWorld = new World(new Vector2(0, -10), true);
+        physicsWorld = new World(new Vector2(0, -200), true);
 
         // fake ground
         BodyDef groundBodyDef = new BodyDef();

@@ -57,4 +57,11 @@ public class Player extends Entity {
     public boolean isGround() {
         return false;
     }
+
+    @Override
+    public void createPhysicsBody() {
+        super.createPhysicsBody();
+        physicsBody.setFixedRotation(true);
+//        physicsBody.setGravityScale(0);
+    }
 }

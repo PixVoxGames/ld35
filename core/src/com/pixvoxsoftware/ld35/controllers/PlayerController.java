@@ -69,6 +69,14 @@ public class PlayerController extends EntityController {
         player.setConsumedSoul(null);
     }
 
+    private void jump(Player player) {
+        if (player.canJump()) {
+            float desiredVelocity = 100;
+            float impulse = player.physicsBody.getMass() * (desiredVelocity - player.physicsBody.getLinearVelocity().y);
+            player.physicsBody.applyLinearImpulse(new Vector2(0, impulse), player.physicsBody.getWorldCenter(), true);
+        }
+    }
+
     private boolean canEntitySurviveAfterSpit(Entity e) {
         return true;
     }
@@ -85,12 +93,11 @@ public class PlayerController extends EntityController {
                 spitSoul(player);
                 return true;
             case Input.Keys.W:
-                // Jump
-//                player.setY(player.getY() + Gdx.graphics.getDeltaTime()*30);
+            case Input.Keys.SPACE:
+                jump(player);
                 return true;
 
             case Input.Keys.S:
-                // Nothing
                 return true;
 
             case Input.Keys.A:

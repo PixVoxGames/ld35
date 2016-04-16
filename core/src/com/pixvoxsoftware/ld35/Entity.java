@@ -1,5 +1,6 @@
 package com.pixvoxsoftware.ld35;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
 
@@ -73,10 +74,21 @@ public abstract class Entity {
         fixtureDef.restitution = 0.6f;
 
         Fixture fixture = physicsBody.createFixture(fixtureDef);
+        fixture.setUserData(this);
+        polygonShape.dispose();
 
+        PolygonShape footShape = new PolygonShape();
+        footShape.setAsBox(sprite.getWidth() / 2, 2, new Vector2(0, -sprite.getHeight() / 2 - 2), 0);
+
+        FixtureDef footFixtureDef = new FixtureDef();
+        footFixtureDef.shape = footShape;
+        footFixtureDef.isSensor = true;
+
+        fixture = physicsBody.createFixture(footFixtureDef);
         fixture.setUserData(this);
 
-        polygonShape.dispose();
+        footShape.dispose();
+
 
         physicsBody.setUserData(this);
     }
