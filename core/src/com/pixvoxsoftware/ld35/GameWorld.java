@@ -40,6 +40,8 @@ public class GameWorld {
 //        addEntity(new Box(this, -10, -10));
 
         physicsWorld.setContactListener(new GroundCheckContactListener());
+
+        Loggers.game.debug("game world initialized");
     }
 
     public void act() {
