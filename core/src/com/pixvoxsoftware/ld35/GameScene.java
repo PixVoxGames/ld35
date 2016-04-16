@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class GameScene implements Scene {
 
@@ -12,6 +13,7 @@ public class GameScene implements Scene {
     private SpriteBatch fontBatch;
     private BitmapFont font;
     private FollowCamera cam;
+    private OrthogonalTiledMapRenderer mapRenderer;
 
     private World world;
     private boolean renderDebugText = true;
@@ -25,6 +27,8 @@ public class GameScene implements Scene {
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         cam = new FollowCamera(w, h, world.getPlayer());
+
+        mapRenderer = new OrthogonalTiledMapRenderer(world.getMap());
     }
 
     @Override
@@ -34,6 +38,9 @@ public class GameScene implements Scene {
         spriteBatch.setProjectionMatrix(cam.combined);
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        mapRenderer.setView(cam);
+        mapRenderer.render();
 
         spriteBatch.begin();
         for (Entity entity : world.getEntities()) {

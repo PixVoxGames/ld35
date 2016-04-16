@@ -1,6 +1,9 @@
 package com.pixvoxsoftware.ld35;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.pixvoxsoftware.ld35.entities.Box;
 
 import java.util.ArrayList;
@@ -9,17 +12,23 @@ public class World {
 
     private Player player;
     private ArrayList<Entity> entities = new ArrayList<>();
+    private TiledMap map;
 
     public World() {
         player = new Player(0, 0);
         entities.add(player);
         entities.add(new Box(-10, -10));
+        map = new TmxMapLoader().load("map.tmx");
     }
 
     public void act() {
         for (Entity entity : entities) {
             entity.act();
         }
+    }
+
+    public TiledMap getMap() {
+        return map;
     }
 
     public Player getPlayer() {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="17" height="11" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="desert_palace_tiles" tilewidth="16" tileheight="16" spacing="1">
+  <image source="desert_palace_tiles.png" width="427" height="325"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="17" height="11">
+  <data encoding="base64" compression="zlib">
+   eJyl0EkOAVEURuGnXQSKRZCwDBaBlCbBApTomxFzvREr0I1YmDOoSm4qVYP3DL7Jf5MzuBGlVBQxV1zooIueb/ckkEQKaWRclrDAEivf7skihzwKaKKloY0iSqIxxkTDVDRmmBs21tjggKNh44ob7ngYNj74/vmPMiqiscVOw140qqihHuCEMy4hdxsN9OFgEOCJF94h9yFG+AF0YFBA
+  </data>
+ </layer>
+</map>
