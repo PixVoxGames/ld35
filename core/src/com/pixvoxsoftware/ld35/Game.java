@@ -7,14 +7,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Game extends ApplicationAdapter {
-	
+
+	private Scene currentScene;
+
 	@Override
 	public void create () {
+        currentScene = new GameScene();
+        Gdx.input.setInputProcessor(currentScene);
 	}
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        currentScene.draw();
 	}
 }
