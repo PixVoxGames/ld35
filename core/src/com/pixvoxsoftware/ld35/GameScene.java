@@ -19,6 +19,7 @@ public class GameScene implements Scene {
 
     @Override
     public void draw() {
+        this.world.act();
         this.spriteBatch.begin();
         this.spriteBatch.draw(this.texture, this.world.getPlayer().getX(),
                 this.world.getPlayer().getY());
