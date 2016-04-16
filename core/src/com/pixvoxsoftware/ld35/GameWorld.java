@@ -54,7 +54,9 @@ public class GameWorld {
             platformBox.dispose();
         }
 
-        player = new Player(this, 100, 100);
+        RectangleMapObject spawnEntity = (RectangleMapObject) map.getLayers().get("Entities").getObjects().get("Spawn");
+
+        player = new Player(this, spawnEntity.getRectangle().getX(), spawnEntity.getRectangle().getY());
         addEntity(player);
 //        addEntity(new Box(this, -10, -10));
 

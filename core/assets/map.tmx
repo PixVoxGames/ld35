@@ -14,4 +14,9 @@
   <object x="289" y="427" width="126" height="45"/>
   <object x="449" y="523" width="192" height="32"/>
  </objectgroup>
+ <objectgroup name="Entities" width="20" height="20">
+  <object type="Lamp" x="320" y="320" width="32" height="96"/>
+  <object x="512" y="416" width="32" height="96"/>
+  <object name="Spawn" type="SpawnPoint" x="192" y="448"/>
+ </objectgroup>
 </map>
