@@ -2,6 +2,7 @@ package com.pixvoxsoftware.ld35;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,28 +11,37 @@ public class GameScene implements Scene {
 
     private SpriteBatch spriteBatch;
     private SpriteBatch fontBatch;
-    private Texture texture;
     private BitmapFont font;
+    private FollowCamera cam;
 
     private World world;
     private boolean renderDebugText = true;
 
     public GameScene() {
-        this.spriteBatch = new SpriteBatch();
+        spriteBatch = new SpriteBatch();
         fontBatch = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal("fonts/arial-15.fnt"));
         font.setColor(1, 1, 1, 1);
-        this.world = new World();
-        this.texture = new Texture(Gdx.files.internal("sketch_gg_w_64.png"));
+        world = new World();
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
+        cam = new FollowCamera(w, h, world.getPlayer());
     }
 
     @Override
     public void draw() {
-        this.world.act();
-        this.spriteBatch.begin();
-        this.spriteBatch.draw(this.texture, this.world.getPlayer().getX(),
-                this.world.getPlayer().getY());
-        this.spriteBatch.end();
+        world.act();
+        cam.update();
+        spriteBatch.setProjectionMatrix(cam.combined);
+
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        spriteBatch.begin();
+        for (Entity entity : world.getEntities()) {
+            spriteBatch.draw(entity.getTexture(), entity.getX(), entity.getY());
+        }
+        spriteBatch.end();
+
         if (renderDebugText) {
             drawDebugText();
         }
@@ -40,6 +50,7 @@ public class GameScene implements Scene {
     private void drawDebugText() {
         fontBatch.begin();
         font.draw(fontBatch, "fps: " + Integer.toString(Gdx.graphics.getFramesPerSecond()), 2, Gdx.graphics.getHeight() - 2);
+        font.draw(fontBatch, "entities count: " + Integer.toString(world.getEntities().size()), 2, Gdx.graphics.getHeight() - 19);
         fontBatch.end();
     }
 

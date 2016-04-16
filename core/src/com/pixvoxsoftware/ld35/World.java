@@ -2,6 +2,7 @@ package com.pixvoxsoftware.ld35;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.pixvoxsoftware.ld35.entities.Box;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ public class World {
     public World() {
         player = new Player(0, 0);
         entities.add(player);
+        entities.add(new Box(-10, -10));
     }
 
     public void act() {
@@ -101,5 +103,9 @@ public class World {
                 return true;
         }
         return false;
+    }
+
+    public ArrayList<Entity> getEntities() {
+        return entities;
     }
 }
