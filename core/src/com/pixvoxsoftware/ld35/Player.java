@@ -45,10 +45,6 @@ public class Player extends Entity {
         this.direction = direction;
     }
 
-    public void setPosition(float x, float y) {
-        physicsBody.setTransform(x, y, 0);
-    }
-
     public void setConsumedSoul(Entity consumedSoul) {
         this.consumedSoul = consumedSoul;
     }
@@ -58,7 +54,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public boolean isGroundContactCheckNeeded() {
-        return true;
+    public boolean isGround() {
+        return false;
     }
 }

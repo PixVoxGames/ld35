@@ -11,10 +11,17 @@ public class Box extends Entity {
     public Box(GameWorld world, float x, float y) {
         this.world = world;
         sprite = new AnimatedSprite(Gdx.files.internal("sketch_gg_w.png"), 1);
+//        createPhysicsBody();
+//        setPosition(x, y);
     }
 
     @Override
     public EntityController getController() {
         return null;
+    }
+
+    @Override
+    public boolean isGround() {
+        return true;
     }
 }

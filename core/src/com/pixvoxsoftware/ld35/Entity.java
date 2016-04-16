@@ -12,6 +12,8 @@ public abstract class Entity {
     public GameWorld world;
     public Body physicsBody;
 
+    public int groundedChecks = 0;
+
     public boolean isKilled() {
         return killed;
     }
@@ -52,11 +54,8 @@ public abstract class Entity {
         this.world = world;
     }
 
-    public void initPhysics() {
-        createPhysicsBody();
-        if (isGroundContactCheckNeeded()) {
-//            createGroundedContactListener();
-        }
+    public void setPosition(float x, float y) {
+        physicsBody.setTransform(x, y, 0);
     }
 
     public void createPhysicsBody() {
@@ -75,12 +74,16 @@ public abstract class Entity {
 
         Fixture fixture = physicsBody.createFixture(fixtureDef);
 
+        fixture.setUserData(this);
+
         polygonShape.dispose();
 
         physicsBody.setUserData(this);
     }
 
-    public boolean isGroundContactCheckNeeded() {
-        return false;
+    public boolean canJump() {
+        return groundedChecks > 0;
     }
+
+    public abstract boolean isGround();
 }

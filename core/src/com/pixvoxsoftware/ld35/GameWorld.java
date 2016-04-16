@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
 import com.pixvoxsoftware.ld35.controllers.PlayerController;
 import com.pixvoxsoftware.ld35.entities.Box;
@@ -33,12 +30,16 @@ public class GameWorld {
         Body groundBody = physicsWorld.createBody(groundBodyDef);
         PolygonShape groundBox = new PolygonShape();
         groundBox.setAsBox(1000f, 0.5f);
-        groundBody.createFixture(groundBox, 0.0f);
+        Fixture fixture = groundBody.createFixture(groundBox, 0.0f);
         groundBox.dispose();
+        // just for testing
+        fixture.setUserData(new Box(this, -10, -10));
 
         player = new Player(this, 100, 100);
         addEntity(player);
 //        addEntity(new Box(this, -10, -10));
+
+        physicsWorld.setContactListener(new GroundCheckContactListener());
     }
 
     public void act() {
@@ -123,6 +124,7 @@ public class GameWorld {
                 "player x: " + Float.toString(player.getSprite().getX()),
                 "player y: " + Float.toString(player.getSprite().getY()),
                 "player direction: " + Float.toString(player.getDirection()),
+                "player grounded: " + Boolean.toString(player.canJump()),
         };
     }
 }
