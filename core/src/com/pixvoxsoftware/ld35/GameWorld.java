@@ -1,6 +1,8 @@
 package com.pixvoxsoftware.ld35;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
@@ -21,7 +23,6 @@ public class GameWorld {
     public World physicsWorld;
 
     public GameWorld() {
-        map = new TmxMapLoader().load("map.tmx");
         physicsWorld = new World(new Vector2(0, -10), true);
 
         // fake ground
@@ -34,6 +35,24 @@ public class GameWorld {
         groundBox.dispose();
         // just for testing
         fixture.setUserData(new Box(this, -10, -10));
+
+
+        map = new TmxMapLoader().load("map.tmx");
+        for (MapObject mapObject : map.getLayers().get("Physics").getObjects()) {
+            RectangleMapObject platformObject = (RectangleMapObject) mapObject;
+            BodyDef platformBodyDef = new BodyDef();
+            platformBodyDef.position.set(platformObject.getRectangle().getCenter(new Vector2(0, 0)));
+            Body platformBody = physicsWorld.createBody(platformBodyDef);
+            PolygonShape platformBox = new PolygonShape();
+            platformBox.setAsBox(platformObject.getRectangle().getWidth()/2f, platformObject.getRectangle().getHeight()/2f);
+            platformBody.createFixture(platformBox, 0.0f).setUserData(new Entity() {
+                @Override
+                public boolean isGround() {
+                    return false;
+                }
+            });
+            platformBox.dispose();
+        }
 
         player = new Player(this, 100, 100);
         addEntity(player);
