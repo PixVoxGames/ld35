@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.pixvoxsoftware.ld35.AnimatedSprite;
 import com.pixvoxsoftware.ld35.WorldConstants;
 import com.pixvoxsoftware.ld35.entities.Entity;
 import com.pixvoxsoftware.ld35.entities.Player;
@@ -27,6 +28,14 @@ public class PlayerController extends EntityController {
                 physicsBody = consumedSoul.physicsBody;
             } else {
                 physicsBody = player.physicsBody;
+            }
+            if (player.getSprite() instanceof AnimatedSprite) {
+                AnimatedSprite sprite = (AnimatedSprite) player.getSprite();
+                if (player.getDirection() == Player.DIRECTION_LEFT) {
+                    sprite.setMirroredVertically(true);
+                } else {
+                    sprite.setMirroredVertically(false);
+                }
             }
 
             // movement
@@ -109,27 +118,17 @@ public class PlayerController extends EntityController {
 
             case Input.Keys.A:
                 // Move left
-                switch (player.getState()) {
-                    case IDLE:
-                        player.setState(Player.State.MOVE);
-                        player.setDirection(Player.DIRECTION_LEFT);
-                    case MOVE:
-                        if (player.getDirection() != Player.DIRECTION_LEFT) {
-                            player.setState(Player.State.IDLE);
-                        }
+                if (player.getState() == Player.State.IDLE) {
+                    player.setState(Player.State.MOVE);
+                    player.setDirection(Player.DIRECTION_LEFT);
                 }
                 return true;
 
             case Input.Keys.D:
                 // Move right
-                switch (player.getState()) {
-                    case IDLE:
-                        player.setState(Player.State.MOVE);
-                        player.setDirection(Player.DIRECTION_RIGHT);
-                    case MOVE:
-                        if (player.getDirection() != Player.DIRECTION_RIGHT) {
-                            player.setState(Player.State.IDLE);
-                        }
+                if (player.getState() == Player.State.IDLE) {
+                    player.setState(Player.State.MOVE);
+                    player.setDirection(Player.DIRECTION_RIGHT);
                 }
                 return true;
 
@@ -149,30 +148,28 @@ public class PlayerController extends EntityController {
         switch (keycode) {
             case Input.Keys.A:
                 switch (player.getState()) {
-                    case IDLE:
-                        player.setState(Player.State.MOVE);
-                        if (player.getDirection() == Player.DIRECTION_LEFT) {
-                            player.setDirection(-player.getDirection());  // opposite direction
-                        }
-                        break;
                     case MOVE:
-                        player.setState(Player.State.IDLE);
-                        player.setDirection(0f);
+                        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                            player.setState(Player.State.MOVE);
+                            player.setDirection(Player.DIRECTION_RIGHT);
+                        } else {
+                            player.setState(Player.State.IDLE);
+                            player.setDirection(0f);
+                        }
                         break;
                 }
                 return true;
 
             case Input.Keys.D:
                 switch (player.getState()) {
-                    case IDLE:
-                        player.setState(Player.State.MOVE);
-                        if (player.getDirection() == Player.DIRECTION_RIGHT) {
-                            player.setDirection(-player.getDirection());  // opposite direction
-                        }
-                        break;
                     case MOVE:
-                        player.setState(Player.State.IDLE);
-                        player.setDirection(0f);
+                        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                            player.setState(Player.State.MOVE);
+                            player.setDirection(Player.DIRECTION_LEFT);
+                        } else {
+                            player.setState(Player.State.IDLE);
+                            player.setDirection(0f);
+                        }
                         break;
                 }
                 return true;

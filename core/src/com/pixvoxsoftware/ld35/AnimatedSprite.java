@@ -14,6 +14,7 @@ public class AnimatedSprite extends Sprite{
     private float currentTime;
     private float width;
     private float height;
+    private boolean mirroredVertically = false;
 
     private Vector2 position = new Vector2(0, 0);
 
@@ -38,7 +39,11 @@ public class AnimatedSprite extends Sprite{
     public void draw(Batch batch) {
         currentTime += Gdx.graphics.getDeltaTime();
         currentFrame = walkAnimation.getKeyFrame(currentTime, true);
-        batch.draw(currentFrame, position.x, position.y, width, height);
+        if (mirroredVertically) {
+            batch.draw(currentFrame, position.x + width, position.y, -width, height);
+        } else {
+            batch.draw(currentFrame, position.x, position.y, width, height);
+        }
     }
 
     @Override
@@ -78,5 +83,11 @@ public class AnimatedSprite extends Sprite{
         return height;
     }
 
+    public boolean isMirroredVertically() {
+        return mirroredVertically;
+    }
 
+    public void setMirroredVertically(boolean mirroredVertically) {
+        this.mirroredVertically = mirroredVertically;
+    }
 }
