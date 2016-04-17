@@ -64,6 +64,14 @@ public abstract class Entity {
         physicsBody.setTransform(x, y, 0);
     }
 
+    public float getX() {
+        return physicsBody.getTransform().getPosition().x;
+    }
+
+    public float getY() {
+        return physicsBody.getTransform().getPosition().y;
+    }
+
     public void createPhysicsBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -74,9 +82,9 @@ public abstract class Entity {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = polygonShape;
-        fixtureDef.density = 0.01f;
-        fixtureDef.friction = 0.0f;
-        fixtureDef.restitution = 0.6f;
+        fixtureDef.density = 0.0001f;
+        fixtureDef.friction = 0;
+        fixtureDef.restitution = 0;
 
         Fixture fixture = physicsBody.createFixture(fixtureDef);
         fixture.setUserData(this);
@@ -87,6 +95,9 @@ public abstract class Entity {
 
         FixtureDef footFixtureDef = new FixtureDef();
         footFixtureDef.shape = footShape;
+        footFixtureDef.density = 0;
+        footFixtureDef.friction = 0;
+        footFixtureDef.restitution = 0;
         footFixtureDef.isSensor = true;
 
         fixture = physicsBody.createFixture(footFixtureDef);
@@ -98,7 +109,7 @@ public abstract class Entity {
         physicsBody.setUserData(this);
     }
 
-    public boolean canJump() {
+    public boolean isOnGround() {
         return groundedChecks > 0;
     }
 

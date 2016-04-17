@@ -22,12 +22,12 @@ public class GameWorld {
     private Player player;
     private ArrayList<Entity> entities = new ArrayList<>();
     private TiledMap map;
-    private Vector2 gravity = new Vector2(0, -100);
+    private Vector2 gravity = new Vector2(0, -1000);
     private float accumulator;
     public World physicsWorld;
 
     public GameWorld() {
-        physicsWorld = new World(new Vector2(0, -200), true);
+        physicsWorld = new World(gravity, true);
 
         // fake ground
         BodyDef groundBodyDef = new BodyDef();
@@ -165,8 +165,9 @@ public class GameWorld {
                 "consumed soul: " + Boolean.toString(player.getConsumedSoul() != null),
                 "player x: " + Float.toString(player.getSprite().getX()),
                 "player y: " + Float.toString(player.getSprite().getY()),
-                "player direction: " + Float.toString(player.getDirection()),
-                "player grounded: " + Boolean.toString(player.canJump()),
+                "player velocity x: " + Float.toString(player.physicsBody.getLinearVelocity().x),
+                "player velocity y: " + Float.toString(player.physicsBody.getLinearVelocity().y),
+                "player grounded: " + Boolean.toString(player.isOnGround()),
         };
     }
 }

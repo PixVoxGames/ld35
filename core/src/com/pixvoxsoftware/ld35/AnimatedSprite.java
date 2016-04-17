@@ -38,7 +38,7 @@ public class AnimatedSprite extends Sprite{
     public void draw(Batch batch) {
         currentTime += Gdx.graphics.getDeltaTime();
         currentFrame = walkAnimation.getKeyFrame(currentTime, true);
-        batch.draw(currentFrame, position.x, position.y);
+        batch.draw(currentFrame, position.x, position.y, width, height);
     }
 
     @Override

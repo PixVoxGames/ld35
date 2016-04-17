@@ -1,15 +1,19 @@
 package com.pixvoxsoftware.ld35.controllers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.pixvoxsoftware.ld35.WorldConstants;
 import com.pixvoxsoftware.ld35.entities.Entity;
 import com.pixvoxsoftware.ld35.entities.Player;
+import com.pixvoxsoftware.ld35.Loggers;
 
 public class PlayerController extends EntityController {
     private EntityController consumedSoulController;
     private Sprite playerSprite;
+    private float jumpingTime = 0;
 
     @Override
     public void act(Entity entity) {
@@ -26,17 +30,11 @@ public class PlayerController extends EntityController {
             }
 
             // movement
-            float desiredVelocity = 100 * player.getDirection();
-            float impulse = physicsBody.getMass() * (desiredVelocity - physicsBody.getLinearVelocity().x);
-            physicsBody.applyLinearImpulse(new Vector2(impulse, 0), physicsBody.getWorldCenter(), true);
-
-            // jumping, just doing the same thing, but by y-axis
+            float impulseX = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_X_VELOCITY * player.getDirection() - physicsBody.getLinearVelocity().x);
+            physicsBody.applyLinearImpulse(new Vector2(impulseX, 0), physicsBody.getWorldCenter(), true);
             if (player.isJumping) {
-                if (player.canJump()) {
-                    desiredVelocity = 100;
-                    impulse = player.physicsBody.getMass() * (desiredVelocity - player.physicsBody.getLinearVelocity().y);
-                    physicsBody.applyLinearImpulse(new Vector2(0, impulse), player.physicsBody.getWorldCenter(), true);
-                }
+                float impulseY = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_Y_VELOCITY - physicsBody.getLinearVelocity().y);
+                physicsBody.applyLinearImpulse(new Vector2(0, impulseY), physicsBody.getWorldCenter(), true);
             }
         } else {
             // it's consumed soul, what we need to do here?
@@ -60,21 +58,24 @@ public class PlayerController extends EntityController {
         playerSprite = player.getSprite();
         player.setSprite(entity.getSprite());
         player.setConsumedSoul(entity);
+        player.world.physicsWorld.destroyBody(player.physicsBody);
     }
 
     private void spitSoul(Player player) {
         if (player.getConsumedSoul() == null) {
             return;
         }
+        Entity consumedSoul = player.getConsumedSoul();
 
-        playerSprite.setPosition(player.getSprite().getX(), player.getSprite().getY());
-        player.setSprite(playerSprite);
         player.setVisible(true);
+        player.setSprite(playerSprite);
+        player.createPhysicsBody();
+        player.setPosition(consumedSoul.getX(), consumedSoul.getY());
 
-        if (canEntitySurviveAfterSpit(player.getConsumedSoul())) {
-            player.getConsumedSoul().setController(consumedSoulController);
+        if (canEntitySurviveAfterSpit(consumedSoul)) {
+            consumedSoul.setController(consumedSoulController);
         } else {
-            player.getConsumedSoul().kill();
+            consumedSoul.kill();
         }
         player.setConsumedSoul(null);
     }
@@ -89,6 +90,10 @@ public class PlayerController extends EntityController {
 
     @Override
     public boolean onKeyPressed(Entity entity, int keycode) {
+        if (!(entity instanceof Player)) {
+            // it's consumed soul, we'll also handle Player entity later, so just skip
+            return false;
+        }
         Player player = (Player) entity;
         switch (keycode) {
             case Input.Keys.E:
@@ -136,6 +141,10 @@ public class PlayerController extends EntityController {
 
     @Override
     public boolean onKeyReleased(Entity entity, int keycode) {
+        if (!(entity instanceof Player)) {
+            // it's consumed soul, we'll also handle Player entity later, so just skip
+            return false;
+        }
         Player player = (Player) entity;
         switch (keycode) {
             case Input.Keys.A:

@@ -11,6 +11,8 @@ public class Player extends Entity {
     public final static float DIRECTION_LEFT = -1f;
     private Entity consumedSoul = null;
     public boolean isJumping = false;
+    public boolean inJump = false;
+    public boolean firstTickInJump = false;
 
     public enum State {
         IDLE,
