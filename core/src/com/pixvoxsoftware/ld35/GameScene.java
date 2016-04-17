@@ -27,7 +27,7 @@ public class GameScene implements Scene {
 
     private GameWorld world;
     private boolean renderDebugText = true;
-    private boolean renderDebugPhysics = true;
+    private boolean renderDebugPhysics = false;
 
     private float SCREEN_WIDTH, SCREEN_HEIGHT;
 

@@ -9,6 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 1280;
 		config.height = 720;
+		config.title = "The Witch & The Witcher";
 		new LwjglApplication(new Game(), config);
 	}
 }

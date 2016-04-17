@@ -19,4 +19,24 @@ public class Lamp extends Entity {
     public boolean isGround() {
         return false;
     }
+
+    @Override
+    public void setPosition(float x, float y) {
+
+    }
+
+    @Override
+    public float getX() {
+        return sprite.getX();
+    }
+
+    @Override
+    public float getY() {
+        return sprite.getY();
+    }
+
+    @Override
+    public void createPhysicsBody() {
+        super.createPhysicsBody();
+    }
 }
