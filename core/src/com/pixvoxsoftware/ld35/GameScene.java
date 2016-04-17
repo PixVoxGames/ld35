@@ -1,5 +1,6 @@
 package com.pixvoxsoftware.ld35;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
@@ -74,6 +75,9 @@ public class GameScene implements Scene {
 
         mapRenderer.setView(cam);
         mapRenderer.render();
+
+        world.rayHandler.setCombinedMatrix(cam);
+        world.rayHandler.updateAndRender();
 
         spriteBatch.begin();
         for (Entity entity : world.getEntities()) {

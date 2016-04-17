@@ -1,6 +1,9 @@
 package com.pixvoxsoftware.ld35;
 
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -26,9 +29,14 @@ public class GameWorld {
     private Vector2 gravity = new Vector2(0, -1000);
     private float accumulator;
     public World physicsWorld;
+    public RayHandler rayHandler;
 
     public GameWorld() {
         physicsWorld = new World(gravity, true);
+
+        rayHandler = new RayHandler(new World(gravity, true));
+        rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.3f);
+//        rayHandler.setShadows(false);
 
         // fake ground
         BodyDef groundBodyDef = new BodyDef();
@@ -51,7 +59,8 @@ public class GameWorld {
         for (MapObject mapObject : map.getLayers().get("Physics").getObjects()) {
             RectangleMapObject platformObject = (RectangleMapObject) mapObject;
             BodyDef platformBodyDef = new BodyDef();
-            platformBodyDef.position.set(platformObject.getRectangle().getCenter(new Vector2(0, 0)));
+            Vector2 position = platformObject.getRectangle().getCenter(new Vector2(0, 0));
+            platformBodyDef.position.set(position);
             Body platformBody = physicsWorld.createBody(platformBodyDef);
             PolygonShape platformBox = new PolygonShape();
             platformBox.setAsBox(platformObject.getRectangle().getWidth()/2f, platformObject.getRectangle().getHeight()/2f);
@@ -63,6 +72,7 @@ public class GameWorld {
             });
             platformBox.dispose();
         }
+        new PointLight(rayHandler, 1000, new Color(1, 228f / 255f, 181f / 255f, 1), 300, 623, 297);
 
         RectangleMapObject spawnEntity = (RectangleMapObject) map.getLayers().get("Entities").getObjects().get("Spawn");
 

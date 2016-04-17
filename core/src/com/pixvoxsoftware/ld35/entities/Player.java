@@ -1,6 +1,8 @@
 package com.pixvoxsoftware.ld35.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.pixvoxsoftware.ld35.AnimatedSprite;
 import com.pixvoxsoftware.ld35.GameWorld;
 import com.pixvoxsoftware.ld35.controllers.PlayerController;
