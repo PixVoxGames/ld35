@@ -12,6 +12,7 @@ import com.pixvoxsoftware.ld35.controllers.EntityController;
 import com.pixvoxsoftware.ld35.controllers.PlayerController;
 import com.pixvoxsoftware.ld35.entities.Box;
 import com.pixvoxsoftware.ld35.entities.Entity;
+import com.pixvoxsoftware.ld35.entities.Lamp;
 import com.pixvoxsoftware.ld35.entities.Player;
 
 import java.util.ArrayList;
@@ -75,8 +76,12 @@ public class GameWorld {
         for (MapObject mapObject : map.getLayers().get("Entities").getObjects()) {
             if (!mapObject.getName().equals("Spawn")) {
                 TiledMapTileMapObject tileMapObject = (TiledMapTileMapObject) mapObject;
-                addEntity(new Box(this, tileMapObject.getTile().getTextureRegion(),
-                        tileMapObject.getX(), tileMapObject.getY()));
+                if (tileMapObject.getName().equals("Lamp")) {
+                    addEntity(new Lamp(tileMapObject.getTextureRegion(), tileMapObject.getX(), tileMapObject.getY()));
+                } else {
+                    addEntity(new Box(this, tileMapObject.getTile().getTextureRegion(),
+                            tileMapObject.getX(), tileMapObject.getY()));
+                }
             }
         }
 

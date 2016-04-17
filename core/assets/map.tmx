@@ -5,12 +5,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="44" height="23">
   <data encoding="base64" compression="zlib">
-   eJzVkz0PAUEURd+G1YiPhpaWlpaWlpaWlpaWlpaWlpaWlpYf5BaKTVhxY9fNnOQkk8xkciaT55lZ1dzBg3V1BEEaNtURBAVYVEcQlGBZHUFQMbfmrWZuzVvD3Jq3FmyrIwg6sKuOIOjBvjqCYACH6giCERyrIwgmcKqOIJjBOXE+AZPQh6lYij6zgMuQvXdtGZiFOZiPve6VFVyH7H3bFnyX/1wHjfIvNnD74x3Bd4UZ1V/s4D6iu/7BAR7VEQQneFZHEFzgVR1BcIN3dQTBA4nJFDY=
-  </data>
- </layer>
- <layer name="Objects" width="44" height="23">
-  <data encoding="base64" compression="zlib">
-   eJztyCEBADAMA7BqGB6+f4m3UDiQwCQAALSmvCu2vCteeQAkH8uNAKk=
+   eJzVkzsPAUEURu+G1YhHQyWhktDS0tLS0tKulpaWlpaWlpaWlh/kKxSTzT7ysXEzJznJTmYyOTebcUSkKfbgwLZ2BEEWdrUjCEqwrB1BUIU17QiChtj13lpi13vriF3vrQf72hEEAzjUjiAYwbF2BMEETrUjCDw4044gmMOFdgTBEq6I8ymYhi7M+PYqMeskWMNNyF5QWw7mYQEWfefrMesk2MJdyF5Um4k5l/v5Ng36F9+yh4cf7zDnCjNqXoYjPCV01z84w4t2BMEV3rQjCO7woR1B8IQv7QiCN1smFLo=
   </data>
  </layer>
  <objectgroup name="Entities" width="44" height="23">
@@ -30,6 +25,8 @@
     <property name="model" value="bag"/>
    </properties>
   </object>
+  <object name="Lamp" type="LightEntity" gid="18" x="736" y="448"/>
+  <object name="Lamp" type="LightEntity" gid="18" x="608" y="448"/>
  </objectgroup>
  <objectgroup name="Physics" width="44" height="23">
   <object x="544" y="512" width="320" height="32"/>
