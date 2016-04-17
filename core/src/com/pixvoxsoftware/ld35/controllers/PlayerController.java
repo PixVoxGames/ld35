@@ -9,7 +9,7 @@ import com.pixvoxsoftware.ld35.AnimatedSprite;
 import com.pixvoxsoftware.ld35.WorldConstants;
 import com.pixvoxsoftware.ld35.entities.Entity;
 import com.pixvoxsoftware.ld35.entities.Player;
-import com.pixvoxsoftware.ld35.Loggers;
+
 
 public class PlayerController extends EntityController {
     private EntityController consumedSoulController;
@@ -39,11 +39,13 @@ public class PlayerController extends EntityController {
             }
 
             // movement
-            float impulseX = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_X_VELOCITY * player.getDirection() - physicsBody.getLinearVelocity().x);
-            physicsBody.applyLinearImpulse(new Vector2(impulseX, 0), physicsBody.getWorldCenter(), true);
-            if (player.isJumping) {
-                float impulseY = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_Y_VELOCITY - physicsBody.getLinearVelocity().y);
-                physicsBody.applyLinearImpulse(new Vector2(0, impulseY), physicsBody.getWorldCenter(), true);
+            if (physicsBody != null) {
+                float impulseX = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_X_VELOCITY * player.getDirection() - physicsBody.getLinearVelocity().x);
+                physicsBody.applyLinearImpulse(new Vector2(impulseX, 0), physicsBody.getWorldCenter(), true);
+                if (player.isJumping) {
+                    float impulseY = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_Y_VELOCITY - physicsBody.getLinearVelocity().y);
+                    physicsBody.applyLinearImpulse(new Vector2(0, impulseY), physicsBody.getWorldCenter(), true);
+                }
             }
         } else {
             // it's consumed soul, what we need to do here?
@@ -52,7 +54,7 @@ public class PlayerController extends EntityController {
 
     public boolean onTouchDown(Player player, float worldX, float worldY, int pointer, int button) {
         Entity entity = player.world.getFirstEntityWithPoint(worldX, worldY);
-        if (entity != null && canConsumeSoul(entity)) {
+        if (entity != null && player.getConsumedSoul() == null && canConsumeSoul(entity)) {
             consumeSoul(player, entity);
         }
         return true;
@@ -68,6 +70,7 @@ public class PlayerController extends EntityController {
         player.setSprite(entity.getSprite());
         player.setConsumedSoul(entity);
         player.world.physicsWorld.destroyBody(player.physicsBody);
+        player.physicsBody = null;
     }
 
     private void spitSoul(Player player) {

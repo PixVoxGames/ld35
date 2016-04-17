@@ -180,8 +180,8 @@ public class GameWorld {
                 "consumed soul: " + Boolean.toString(player.getConsumedSoul() != null),
                 "player x: " + Float.toString(player.getSprite().getX()),
                 "player y: " + Float.toString(player.getSprite().getY()),
-                "player velocity x: " + Float.toString(player.physicsBody.getLinearVelocity().x),
-                "player velocity y: " + Float.toString(player.physicsBody.getLinearVelocity().y),
+//                "player velocity x: " + Float.toString(player.physicsBody.getLinearVelocity().x),
+//                "player velocity y: " + Float.toString(player.physicsBody.getLinearVelocity().y),
                 "player grounded: " + Boolean.toString(player.isOnGround()),
                 "player direction: " + player.getDirection(),
         };
