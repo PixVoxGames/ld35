@@ -2,6 +2,7 @@ package com.pixvoxsoftware.ld35;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 
@@ -32,7 +33,7 @@ public class FollowCamera extends OrthographicCamera {
         if (target != null) {
             // because it's a rectangle, we need to lookAt his center
             // z-coordinate doesn't matter, because of orthographic projection
-            AnimatedSprite sprite = target.getSprite();
+            Sprite sprite = target.getSprite();
             float x = sprite.getX() + sprite.getWidth() / 2;
             float y = sprite.getY() + sprite.getHeight() / 2;
 

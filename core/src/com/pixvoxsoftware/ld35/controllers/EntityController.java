@@ -10,7 +10,7 @@ import com.pixvoxsoftware.ld35.GameWorld;
 public abstract class EntityController {
     public void act(Entity entity) {
         Vector2 position = entity.physicsBody.getTransform().getPosition();
-        AnimatedSprite sprite = entity.getSprite();
+        Sprite sprite = entity.getSprite();
         sprite.setPosition(position.x - sprite.getWidth() / 2, position.y - sprite.getHeight() / 2);
     }
 

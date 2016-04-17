@@ -10,6 +10,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
 import com.pixvoxsoftware.ld35.controllers.PlayerController;
 import com.pixvoxsoftware.ld35.entities.Box;
+import com.pixvoxsoftware.ld35.entities.Lamp;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -34,7 +36,12 @@ public class GameWorld {
         Fixture fixture = groundBody.createFixture(groundBox, 0.0f);
         groundBox.dispose();
         // just for testing
-        fixture.setUserData(new Box(this, -10, -10));
+        fixture.setUserData(new Entity() {
+            @Override
+            public boolean isGround() {
+                return true;
+            }
+        });
 
 
         map = new TmxMapLoader().load("map.tmx");
@@ -62,8 +69,19 @@ public class GameWorld {
 
         physicsWorld.setContactListener(new GroundCheckContactListener());
 
+
+        // Load entities
+        for (MapObject mapObject : map.getLayers().get("Entities").getObjects()) {
+            if (!mapObject.getName().equals("Spawn")) {
+                RectangleMapObject rectangleMapObject = (RectangleMapObject) mapObject;
+                addEntity(new Box(this, rectangleMapObject.getRectangle().getX(),
+                        rectangleMapObject.getRectangle().getY()));
+            }
+        }
+
         Loggers.game.debug("game world initialized");
     }
+
 
     public void act() {
         float frameTime = Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
@@ -134,7 +152,7 @@ public class GameWorld {
 
     public Entity getFirstEntityWithPoint(float x, float y) {
         for (Entity entity : entities) {
-            if (entity.getSprite().getBoundingRectangle().contains(x, y)) {
+            if (entity.getBoundingRectangle().contains(x, y)) {
                 return entity;
             }
         }

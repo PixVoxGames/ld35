@@ -1,5 +1,7 @@
 package com.pixvoxsoftware.ld35;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
@@ -7,8 +9,10 @@ import com.pixvoxsoftware.ld35.controllers.EntityController;
 public abstract class Entity {
     protected boolean visible = true;
     protected EntityController controller;
-    protected AnimatedSprite sprite;
+    protected Sprite sprite;
     protected boolean killed = false;
+
+    private Rectangle bounds = new Rectangle();
 
     public GameWorld world;
     public Body physicsBody;
@@ -23,11 +27,11 @@ public abstract class Entity {
         killed = true;
     }
 
-    public AnimatedSprite getSprite() {
+    public Sprite getSprite() {
         return sprite;
     }
 
-    public void setSprite(AnimatedSprite sprite) {
+    public void setSprite(Sprite sprite) {
         this.sprite = sprite;
     }
 
@@ -98,4 +102,9 @@ public abstract class Entity {
     }
 
     public abstract boolean isGround();
+
+    public Rectangle getBoundingRectangle() {
+        bounds.set(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+        return bounds;
+    }
 }

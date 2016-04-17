@@ -9,14 +9,14 @@
   </data>
  </layer>
  <objectgroup name="Physics" width="20" height="20">
-  <object x="0" y="0" width="64" height="640"/>
+  <object x="0" y="0" width="32" height="640"/>
   <object x="129" y="492" width="127" height="43"/>
   <object x="289" y="427" width="126" height="45"/>
   <object x="449" y="523" width="192" height="32"/>
  </objectgroup>
  <objectgroup name="Entities" width="20" height="20">
-  <object type="Lamp" x="320" y="320" width="32" height="96"/>
-  <object x="512" y="416" width="32" height="96"/>
-  <object name="Spawn" type="SpawnPoint" x="192" y="256"/>
+  <object name="Spawn" type="SpawnPoint" x="352" y="320"/>
+  <object name="Lamp" type="Lamp" x="512" y="480" width="32" height="32"/>
+  <object name="Lamp" type="Lamp" x="576" y="480" width="32" height="32"/>
  </objectgroup>
 </map>
