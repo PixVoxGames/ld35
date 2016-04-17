@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
@@ -185,5 +186,14 @@ public class GameWorld {
                 "player grounded: " + Boolean.toString(player.isOnGround()),
                 "player direction: " + player.getDirection(),
         };
+    }
+    public float getHeight() {
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+        return layer.getHeight()*layer.getTileHeight();
+    }
+
+    public float getWidth() {
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+        return layer.getWidth()*layer.getTileWidth();
     }
 }

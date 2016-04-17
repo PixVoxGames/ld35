@@ -41,7 +41,7 @@ public class GameScene implements Scene {
         SCREEN_WIDTH = Gdx.graphics.getWidth();
         SCREEN_HEIGHT = Gdx.graphics.getHeight();
         cam = new FollowCamera(SCREEN_WIDTH, SCREEN_HEIGHT, world.getPlayer());
-        cam.setBounds(0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2);
+        cam.setBounds(0, 0, world.getWidth(), world.getHeight());
         debugRenderer = new Box2DDebugRenderer();
         mapRenderer = new OrthogonalTiledMapRenderer(world.getMap());
         background = new ParallaxBackground(cam);
