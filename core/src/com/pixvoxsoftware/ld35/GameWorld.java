@@ -4,6 +4,7 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -35,7 +36,7 @@ public class GameWorld {
         physicsWorld = new World(gravity, true);
 
         rayHandler = new RayHandler(new World(gravity, true));
-        rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.3f);
+        rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.5f);
 //        rayHandler.setShadows(false);
 
         // fake ground
@@ -72,7 +73,6 @@ public class GameWorld {
             });
             platformBox.dispose();
         }
-        new PointLight(rayHandler, 1000, new Color(1, 228f / 255f, 181f / 255f, 1), 300, 623, 297);
 
         RectangleMapObject spawnEntity = (RectangleMapObject) map.getLayers().get("Entities").getObjects().get("Spawn");
 
@@ -87,7 +87,7 @@ public class GameWorld {
             if (!mapObject.getName().equals("Spawn")) {
                 TiledMapTileMapObject tileMapObject = (TiledMapTileMapObject) mapObject;
                 if (tileMapObject.getName().equals("Lamp")) {
-                    addEntity(new Lamp(tileMapObject.getTextureRegion(), tileMapObject.getX(), tileMapObject.getY()));
+                    addEntity(new Lamp(this, tileMapObject.getTextureRegion(), tileMapObject.getX(), tileMapObject.getY()));
                 } else {
                     addEntity(new Box(this, tileMapObject.getTile().getTextureRegion(),
                             tileMapObject.getX(), tileMapObject.getY()));

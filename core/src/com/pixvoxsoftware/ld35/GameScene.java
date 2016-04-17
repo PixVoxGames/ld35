@@ -76,9 +76,6 @@ public class GameScene implements Scene {
         mapRenderer.setView(cam);
         mapRenderer.render();
 
-        world.rayHandler.setCombinedMatrix(cam);
-        world.rayHandler.updateAndRender();
-
         spriteBatch.begin();
         for (Entity entity : world.getEntities()) {
             if (entity.isVisible()) {
@@ -86,6 +83,9 @@ public class GameScene implements Scene {
             }
         }
         spriteBatch.end();
+
+        world.rayHandler.setCombinedMatrix(cam);
+        world.rayHandler.updateAndRender();
 
         if (renderDebugPhysics) {
             debugRenderer.render(world.physicsWorld, cam.combined);
