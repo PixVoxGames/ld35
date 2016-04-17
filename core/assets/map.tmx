@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="78">
- <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="220" columns="10">
-  <image source="tileset.png" width="320" height="720"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="86">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="529" columns="23">
+  <image source="tileset.png" width="736" height="736"/>
  </tileset>
  <layer name="Tile Layer 1" width="256" height="64">
   <data encoding="base64" compression="zlib">
-   eJzt3KFPVQEYxuGDg6TFoIkNk5tWrVClYpWqVatUrVq1YsWqVSpU/IP82AwGNu7mda/sfZ7t3Q1nO+crt/42lmW5tQCNbs/upI8AIu7N7qePACJ2Zg/SRwARj2aP00cAEU9mT9NHABG7s730EUDEs9l++ggg4mD2PH0EEPFidpg+Aoh4OXuVPgKIeD17kz4CiHg7O0ofAUS8m71PHwFEfJh9TB8BRHyafU4fAUQcz76kjwAiTmZf00cAEd9m39NHABE/ZqfpI4CIs9l5+ggg4mL2M30EELGx6P9CK/1f6KX/C730f6GX/i/00v+FXvq/0Ev/F3rp/0Iv/V/opf8LvfR/oZf+L/TS/4Ve+r/QS/8Xeun/Qi/9X+il/wu99H+hl/4v9NL/hV76v9BL/xd66f9CL/1f6KX/C730f6GX/i/00v+FXvq/0Ev/F3rp/0Iv/V/opf8LvfR/oZf+L/T6X/q/d1cYsF6r9H9X+W+uY9d9H1ivVfq/2zf8OXC1y/7vdf2fhzf8OXC1y/7v5h/b+r3Nv/j1nvW8xzd981/f/QvxdDq1
+   eJzt3E1qFEEYxvEK6NJlxOxdRhQS3biMRAhx4zKiEDzBiIJ4goiC5gQRvUNE7xDROyi6SS6gqPViFxRldWemH7urC/8/eEmYyWRq8059dM+z6ZxbcXW6XnoAQOXu+rpSehA93S49AKByD33dLD2Ini6WHgBQuWe+7pUeRE+s/wHNa1+PSg+iJ9b/gOadr+elB9ET639A89HXm9KD6In1P6D56ut96UH0xPof0Pz09an0IHpi/gc0y0vOfSs9iJ6Y/wHNqu//X6UH0RPnf4Bmw/f/+aXSo+iH9T+g2fG9f6nS/mf9D2hmvvdvVNr/zP+AZs/3/p1K+5/5H9Ac+N5/UGn/M/8DmkPf+08r7X/mf0Bz5Hv/VaX9z/wPaD773n9baf8z/wOa7773P9D/wH/pgq8vlfY/9/8Bmsuu3vw/9v+AZtPVm//H+h/QWP5vrfl/50oPAKic5f/Wmv/H/h/QWP5vrfl/zP+AxvJ/a83/Y/4HNJb/W2v+H+f/gMbyf2vN/+P8H9BY/m+t+X+s/wGN5f/Wmv/H+h/QLFeU/7fma93X1aZY/wOa1Qnn/8W9Htd2U1z/AzQbI+f/pXN4XC7z3Ham7jfF/h/Q7Ewk/y/u+1yvh1qLiv0/oJmNmP+3lZTJ9f1aR201r7Fi/w9o9kbM/9tNqqvH2yr0vr2e/T+gORgx/+9xUm09nn5OxBX6317P/h/QHI6Y//ciqbYeTz8n4rLXrTc/2f8DmqMR8v/a1vddPd5V1v/7jv0/oLL836Hz/3Lre/sc6Orxl+5Pj9uZ/5OmwudH2AMw/wMay/9dGfg9cuv7+D6A9Dpf3Ou5dUM4B2D+BzSW/zt0/mdufR/39bqb7xpA/Plhr+H8H9BY/u/Q+Z+5tX3c17l+7zoXDP+H839AY/m/JfI/477O9XvXuWA4G2D+BzSW/1si/zPu61y/d50JhmL+BzSW/1si/zPu61y/p72e+zzg/B/QWP5v6fzPea4DhmuGYa9gnxmc/wMay/+dWv5n2/4/7n3O/wCd5f9OLf+zbf+/mzzH+h/QWP7v1PI/c2cAdo9Qeg2A9T+gsfzfKeZ/xvcHhvsCuf4H/FuW/zvF/M+4/8P9/+magP0/oFmeaP5n3P/77u/7/20vwP4f0KyOnP85r7j/4+t+8Rkg+39AszGR/M9U+l2g3P3/7P8Bzc6I+Z+LSL8LlF4TtHMA2/8fN3US1XH08zh5bN7nc8+lj6V/l3s8PAdM0WzE/M9FpN8FSs/+uf4P6PZGzP9cRNf3/sLj7P8BzcGI+Z+LaPseQPo4gP4OR8j/VHR9JwiA5miO/M9rp/yPoZ8HMAzL//1xSv/fOuV/DP08gGFY/q9lAJ7xdTb5mf6ePpb7u0Uf4714L96r+72GHNtvkrUjcw==
   </data>
  </layer>
  <objectgroup name="Entities">
   <object id="23" name="Spawn" x="80" y="1952" width="20" height="15"/>
-  <object id="46" name="Lamp" gid="18" x="544" y="1952" width="32" height="32"/>
-  <object id="47" name="Lamp" gid="18" x="800" y="1952" width="32" height="32"/>
-  <object id="51" name="Lamp" gid="18" x="288" y="1952" width="32" height="32"/>
-  <object id="68" name="Lamp" gid="18" x="1568" y="1952" width="32" height="32"/>
-  <object id="69" name="Lamp" gid="18" x="1312" y="1952" width="32" height="32"/>
-  <object id="70" name="Lamp" gid="18" x="1056" y="1952" width="32" height="32"/>
-  <object id="77" name="Chest" gid="83" x="672" y="2016" width="32" height="32"/>
+  <object id="46" name="Lamp" gid="31" x="544" y="1952" width="32" height="32"/>
+  <object id="47" name="Lamp" gid="31" x="800" y="1952" width="32" height="32"/>
+  <object id="51" name="Lamp" gid="31" x="288" y="1952" width="32" height="32"/>
+  <object id="70" name="Lamp" gid="31" x="1056" y="1952" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Physics">
   <object id="15" x="32.5" y="2018.5" width="8171" height="29.5"/>
+  <object id="78" x="1505" y="0" width="31" height="1887.5"/>
+  <object id="85" x="1536.5" y="1791.5" width="1344" height="32"/>
  </objectgroup>
 </map>
