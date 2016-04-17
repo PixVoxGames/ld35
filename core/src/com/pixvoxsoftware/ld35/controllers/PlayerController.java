@@ -4,8 +4,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.pixvoxsoftware.ld35.Entity;
-import com.pixvoxsoftware.ld35.Player;
+import com.pixvoxsoftware.ld35.entities.Entity;
+import com.pixvoxsoftware.ld35.entities.Player;
 
 public class PlayerController extends EntityController {
     private EntityController consumedSoulController;

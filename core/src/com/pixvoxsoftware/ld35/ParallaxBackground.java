@@ -29,6 +29,7 @@ public class ParallaxBackground {
 
         for (ParallaxLayer layer : layers) {
             layer.setX(((deltaX - layer.getX()) * layer.getSpeed()/ layer.getTexture().getWidth()) % 1f);
+//            layer.setY(((layer.getY() - deltaY) * layer.getSpeed() * 0.2f/ layer.getTexture().getWidth()) % 1f);
         }
     }
 }

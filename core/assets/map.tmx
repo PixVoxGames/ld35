@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="44" height="23" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
-  <image source="tileset.png" width="320" height="640"/>
+  <image source="tileset.png" width="320" height="720"/>
  </tileset>
- <layer name="Background" width="20" height="20">
+ <layer name="Tile Layer 1" width="44" height="23">
   <data encoding="base64" compression="zlib">
-   eJytzi8TAVEUh+G7LMWfVairUlel2kqlUncrlUqlrkrdrbsfzRtvYO7Mnd+ZedqZ95zAGNMyuumhL+yNMRH2YkyFvRnmwl6ChbC3xErYWyMV9jbYCns77IW9A47CXoZc2DvhLOxdcHXstBGig65j94a7Y2eAISKMHLsPPD1/+TUFXh6/2Hft+298PP6w79r3S1QevX9ToxH2vmJmEB8=
+   eJzVkz0PAUEURd+G1YiPhpaWlpaWlpaWlpaWlpaWlpaWlpYf5BaKTVhxY9fNnOQkk8xkciaT55lZ1dzBg3V1BEEaNtURBAVYVEcQlGBZHUFQMbfmrWZuzVvD3Jq3FmyrIwg6sKuOIOjBvjqCYACH6giCERyrIwgmcKqOIJjBOXE+AZPQh6lYij6zgMuQvXdtGZiFOZiPve6VFVyH7H3bFnyX/1wHjfIvNnD74x3Bd4UZ1V/s4D6iu/7BAR7VEQQneFZHEFzgVR1BcIN3dQTBA4nJFDY=
   </data>
  </layer>
- <objectgroup name="Physics" width="20" height="20">
-  <object x="0" y="0" width="32" height="640"/>
-  <object x="129" y="492" width="127" height="43"/>
-  <object x="289" y="427" width="126" height="45"/>
-  <object x="449" y="523" width="192" height="32"/>
+ <layer name="Objects" width="44" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztyCEBADAMA7BqGB6+f4m3UDiQwCQAALSmvCu2vCteeQAkH8uNAKk=
+  </data>
+ </layer>
+ <objectgroup name="Entities" width="44" height="23">
+  <object name="Spawn" type="SpawnEntity" x="448" y="384"/>
+  <object name="Chest" type="Box" gid="83" x="672" y="512">
+   <properties>
+    <property name="model" value="chest"/>
+   </properties>
+  </object>
+  <object name="Basket" type="Box" gid="87" x="800" y="512">
+   <properties>
+    <property name="model" value="chest"/>
+   </properties>
+  </object>
+  <object name="Bag" type="Box" gid="89" x="256" y="480">
+   <properties>
+    <property name="model" value="bag"/>
+   </properties>
+  </object>
  </objectgroup>
- <objectgroup name="Entities" width="20" height="20">
-  <object name="Spawn" type="SpawnPoint" x="352" y="320"/>
-  <object name="Lamp" type="Lamp" x="512" y="480" width="32" height="32"/>
-  <object name="Lamp" type="Lamp" x="576" y="480" width="32" height="32"/>
+ <objectgroup name="Physics" width="44" height="23">
+  <object x="544" y="512" width="320" height="32"/>
+  <object x="384" y="448" width="128" height="32"/>
+  <object x="224" y="480" width="128" height="32"/>
  </objectgroup>
 </map>

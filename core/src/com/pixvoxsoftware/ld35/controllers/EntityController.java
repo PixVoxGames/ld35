@@ -2,10 +2,7 @@ package com.pixvoxsoftware.ld35.controllers;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Transform;
-import com.pixvoxsoftware.ld35.AnimatedSprite;
-import com.pixvoxsoftware.ld35.Entity;
-import com.pixvoxsoftware.ld35.GameWorld;
+import com.pixvoxsoftware.ld35.entities.Entity;
 
 public abstract class EntityController {
     public void act(Entity entity) {

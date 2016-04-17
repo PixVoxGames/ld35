@@ -3,7 +3,6 @@ package com.pixvoxsoftware.ld35.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.pixvoxsoftware.ld35.Entity;
 import com.pixvoxsoftware.ld35.GameWorld;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
 

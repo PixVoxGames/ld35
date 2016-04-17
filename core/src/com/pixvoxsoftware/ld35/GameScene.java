@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.pixvoxsoftware.ld35.entities.Entity;
 
 
 public class GameScene implements Scene {
@@ -43,9 +44,9 @@ public class GameScene implements Scene {
         debugRenderer = new Box2DDebugRenderer();
         mapRenderer = new OrthogonalTiledMapRenderer(world.getMap());
         background = new ParallaxBackground(cam);
-        background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/wall.png")), 0.1f));
-        background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/light.png")), 0.5f));
-        background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/rocks.png")), 0.9f));
+        background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/wall.png")), 0.8f));
+        background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/light.png")), 0.95f));
+        background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/rocks.png")), 1f));
     }
 
     @Override
@@ -65,9 +66,9 @@ public class GameScene implements Scene {
                     SCREEN_WIDTH,
                     SCREEN_HEIGHT,
                     layer.getX(),
-                    1f,
+                    layer.getY()+1f,
                     layer.getX()+1f,
-                    0f);
+                    layer.getY());
         }
         staticSpritesBatch.end();
 

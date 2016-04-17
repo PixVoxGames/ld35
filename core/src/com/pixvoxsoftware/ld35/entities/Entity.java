@@ -1,9 +1,10 @@
-package com.pixvoxsoftware.ld35;
+package com.pixvoxsoftware.ld35.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.pixvoxsoftware.ld35.GameWorld;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
 
 public abstract class Entity {

@@ -5,12 +5,14 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
 import com.pixvoxsoftware.ld35.controllers.PlayerController;
 import com.pixvoxsoftware.ld35.entities.Box;
-import com.pixvoxsoftware.ld35.entities.Lamp;
+import com.pixvoxsoftware.ld35.entities.Entity;
+import com.pixvoxsoftware.ld35.entities.Player;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -65,7 +67,6 @@ public class GameWorld {
 
         player = new Player(this, spawnEntity.getRectangle().getX(), spawnEntity.getRectangle().getY());
         addEntity(player);
-//        addEntity(new Box(this, -10, -10));
 
         physicsWorld.setContactListener(new GroundCheckContactListener());
 
@@ -73,9 +74,9 @@ public class GameWorld {
         // Load entities
         for (MapObject mapObject : map.getLayers().get("Entities").getObjects()) {
             if (!mapObject.getName().equals("Spawn")) {
-                RectangleMapObject rectangleMapObject = (RectangleMapObject) mapObject;
-                addEntity(new Box(this, rectangleMapObject.getRectangle().getX(),
-                        rectangleMapObject.getRectangle().getY()));
+                TiledMapTileMapObject tileMapObject = (TiledMapTileMapObject) mapObject;
+                addEntity(new Box(this, tileMapObject.getTile().getTextureRegion(),
+                        tileMapObject.getX(), tileMapObject.getY()));
             }
         }
 
