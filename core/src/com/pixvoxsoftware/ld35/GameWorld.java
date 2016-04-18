@@ -51,6 +51,16 @@ public class GameWorld {
             public boolean isGround() {
                 return true;
             }
+
+            @Override
+            public short getCategory() {
+                return 0;
+            }
+
+            @Override
+            public short getCollisionMask() {
+                return (short) 0xffff;
+            }
         });
 
 
@@ -68,6 +78,16 @@ public class GameWorld {
                 public boolean isGround() {
                     return true;
                 }
+
+                @Override
+                public short getCategory() {
+                    return WorldConstants.OBSTACLE_CATEGORY;
+                }
+
+                @Override
+                public short getCollisionMask() {
+                    return WorldConstants.ANY_CATEGORY;
+                }
             });
             platformBox.dispose();
         }
@@ -79,16 +99,22 @@ public class GameWorld {
 
         physicsWorld.setContactListener(new GroundCheckContactListener());
 
-
         // Load entities
         for (MapObject mapObject : map.getLayers().get("Entities").getObjects()) {
             if (!mapObject.getName().equals("Spawn")) {
-                TiledMapTileMapObject tileMapObject = (TiledMapTileMapObject) mapObject;
-                if (tileMapObject.getName().equals("Lamp")) {
-                    addEntity(new Lamp(this, tileMapObject.getTextureRegion(), tileMapObject.getX(), tileMapObject.getY()));
+                if (mapObject instanceof TiledMapTileMapObject) {
+                    TiledMapTileMapObject tileMapObject = (TiledMapTileMapObject) mapObject;
+                    if (tileMapObject.getName().equals("Lamp")) {
+                        addEntity(new Lamp(this, tileMapObject.getTextureRegion(), tileMapObject.getX(), tileMapObject.getY()));
+                    } else if (tileMapObject.getName().equals("Torch")) {
+                        AnimatedSprite sprite = new AnimatedSprite(Gdx.files.internal("torch.png"), 8, 0.06f);
+                        addEntity(new Lamp(this, sprite, tileMapObject.getX(), tileMapObject.getY()));
+                    } else {
+                        addEntity(new Box(this, tileMapObject.getTile().getTextureRegion(),
+                                tileMapObject.getX(), tileMapObject.getY()));
+                    }
                 } else {
-                    addEntity(new Box(this, tileMapObject.getTile().getTextureRegion(),
-                            tileMapObject.getX(), tileMapObject.getY()));
+                    Loggers.game.debug("unknown tile: {}", mapObject.getName());
                 }
             }
         }

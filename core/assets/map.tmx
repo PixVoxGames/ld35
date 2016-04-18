@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="112">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="121">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="529" columns="23">
   <image source="tileset.png" width="736" height="736"/>
  </tileset>
  <layer name="Tile Layer 1" width="256" height="64">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <objectgroup name="Entities">
@@ -21,10 +21,11 @@
   <object id="107" name="Torch" gid="175" x="1952" y="1888" width="32" height="32"/>
   <object id="110" name="GuardSpawn" x="2176" y="1920" width="32" height="32">
    <properties>
-    <property name="stepsLeft" type="int" value="9"/>
-    <property name="stepsRight" type="int" value="9"/>
+    <property name="stepsLeft" type="int" value="0"/>
+    <property name="stepsRight" type="int" value="0"/>
    </properties>
   </object>
+  <object id="120" name="Chest" gid="187" x="1952" y="1792" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Physics">
   <object id="15" x="32.5" y="2018.5" width="8171" height="29.5"/>

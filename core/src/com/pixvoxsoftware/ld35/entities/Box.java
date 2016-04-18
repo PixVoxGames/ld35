@@ -3,6 +3,7 @@ package com.pixvoxsoftware.ld35.entities;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.pixvoxsoftware.ld35.GameWorld;
+import com.pixvoxsoftware.ld35.WorldConstants;
 import com.pixvoxsoftware.ld35.controllers.BoxController;
 
 public class Box extends Entity {
@@ -17,5 +18,15 @@ public class Box extends Entity {
     @Override
     public boolean isGround() {
         return false;
+    }
+
+    @Override
+    public short getCategory() {
+        return WorldConstants.ENTITY_CATEGORY;
+    }
+
+    @Override
+    public short getCollisionMask() {
+        return WorldConstants.OBSTACLE_CATEGORY;
     }
 }

@@ -64,6 +64,10 @@ public abstract class Entity {
         physicsBody.setTransform(x, y, 0);
     }
 
+    public Vector2 getPosition() {
+        return physicsBody.getPosition();
+    }
+
     public float getX() {
         return physicsBody.getTransform().getPosition().x;
     }
@@ -85,6 +89,8 @@ public abstract class Entity {
         fixtureDef.density = 0.0001f;
         fixtureDef.friction = 0;
         fixtureDef.restitution = 0;
+        fixtureDef.filter.maskBits = getCollisionMask();
+        fixtureDef.filter.categoryBits = getCategory();
 
         Fixture fixture = physicsBody.createFixture(fixtureDef);
         fixture.setUserData(this);
@@ -113,10 +119,12 @@ public abstract class Entity {
         return groundedChecks > 0;
     }
 
-    public abstract boolean isGround();
-
     public Rectangle getBoundingRectangle() {
         bounds.set(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         return bounds;
     }
+
+    public abstract boolean isGround();
+    public abstract short getCategory();
+    public abstract short getCollisionMask();
 }

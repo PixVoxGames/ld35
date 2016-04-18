@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.pixvoxsoftware.ld35.AnimatedSprite;
 import com.pixvoxsoftware.ld35.Loggers;
 import com.pixvoxsoftware.ld35.WorldConstants;
@@ -60,7 +63,7 @@ public class PlayerController extends EntityController {
 
     public boolean onTouchDown(Player player, float worldX, float worldY, int pointer, int button) {
         Entity entity = player.world.getFirstEntityWithPoint(worldX, worldY);
-        if (entity != null && player.getConsumedSoul() == null && canConsumeSoul(entity)) {
+        if (entity != null && player.getConsumedSoul() == null && canConsumeSoul(player, entity)) {
             consumeSoul(player, entity);
         }
         return true;
@@ -102,8 +105,21 @@ public class PlayerController extends EntityController {
         return true;
     }
 
-    private boolean canConsumeSoul(Entity entity) {
-        return true;
+    private class MyRayCastCallback implements RayCastCallback {
+        private int hits = 0;
+        @Override
+        public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+            hits += 1;
+            Loggers.game.debug("hit {}", fixture);
+            return 1;
+        }
+    }
+
+    private boolean canConsumeSoul(Player player, Entity entity) {
+        MyRayCastCallback rayCastCallback = new MyRayCastCallback();
+        Loggers.game.debug("rayCastCallback: {} -> {}", player.getPosition(), entity.getPosition());
+        entity.world.physicsWorld.rayCast(rayCastCallback, player.getPosition(), entity.getPosition());
+        return rayCastCallback.hits <= 1;
     }
 
     private void triggerConsumedSoulAction(Player player) {
