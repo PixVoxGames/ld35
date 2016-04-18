@@ -182,6 +182,7 @@ public class GameWorld {
 //                "player velocity y: " + Float.toString(player.physicsBody.getLinearVelocity().y),
                 "player grounded: " + Boolean.toString(player.isOnGround()),
                 "player direction: " + player.getDirection(),
+                "player state: " + player.getState().toString(),
         };
     }
     public float getHeight() {

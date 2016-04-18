@@ -6,15 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.pixvoxsoftware.ld35.AnimatedSprite;
+import com.pixvoxsoftware.ld35.Loggers;
 import com.pixvoxsoftware.ld35.WorldConstants;
 import com.pixvoxsoftware.ld35.entities.Entity;
+import com.pixvoxsoftware.ld35.entities.Lamp;
 import com.pixvoxsoftware.ld35.entities.Player;
 
 
 public class PlayerController extends EntityController {
     private EntityController consumedSoulController;
     private Sprite playerSprite;
-    private float jumpingTime = 0;
 
     @Override
     public void act(Entity entity) {
@@ -29,6 +30,7 @@ public class PlayerController extends EntityController {
             } else {
                 physicsBody = player.physicsBody;
             }
+
             if (player.getSprite() instanceof AnimatedSprite) {
                 AnimatedSprite sprite = (AnimatedSprite) player.getSprite();
                 if (player.getDirection() == Player.DIRECTION_LEFT) {
@@ -40,8 +42,12 @@ public class PlayerController extends EntityController {
 
             // movement
             if (physicsBody != null) {
-                float impulseX = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_X_VELOCITY * player.getDirection() - physicsBody.getLinearVelocity().x);
-                physicsBody.applyLinearImpulse(new Vector2(impulseX, 0), physicsBody.getWorldCenter(), true);
+                if (player.getState() == Player.State.MOVE) {
+                    float impulseX = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_X_VELOCITY * player.getDirection() - physicsBody.getLinearVelocity().x);
+                    physicsBody.applyLinearImpulse(new Vector2(impulseX, 0), physicsBody.getWorldCenter(), true);
+                } else {
+                    physicsBody.applyLinearImpulse(new Vector2(-physicsBody.getLinearVelocity().x * physicsBody.getMass(), 0), physicsBody.getWorldCenter(), true);
+                }
                 if (player.isJumping) {
                     float impulseY = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_Y_VELOCITY - physicsBody.getLinearVelocity().y);
                     physicsBody.applyLinearImpulse(new Vector2(0, impulseY), physicsBody.getWorldCenter(), true);
@@ -100,6 +106,16 @@ public class PlayerController extends EntityController {
         return true;
     }
 
+    private void triggerConsumedSoulAction(Player player) {
+        Entity consumedSoul = player.getConsumedSoul();
+        if (consumedSoul != null) {
+            if (consumedSoul instanceof Lamp) {
+                Lamp consumedLamp = (Lamp) consumedSoul;
+                consumedLamp.setActive(!consumedLamp.isActive());
+            }
+        }
+    }
+
     @Override
     public boolean onKeyPressed(Entity entity, int keycode) {
         if (!(entity instanceof Player)) {
@@ -110,6 +126,9 @@ public class PlayerController extends EntityController {
         switch (keycode) {
             case Input.Keys.E:
                 spitSoul(player);
+                return true;
+            case Input.Keys.Q:
+                triggerConsumedSoulAction(player);
                 return true;
             case Input.Keys.W:
             case Input.Keys.SPACE:
@@ -157,7 +176,6 @@ public class PlayerController extends EntityController {
                             player.setDirection(Player.DIRECTION_RIGHT);
                         } else {
                             player.setState(Player.State.IDLE);
-                            player.setDirection(0f);
                         }
                         break;
                 }
@@ -171,7 +189,6 @@ public class PlayerController extends EntityController {
                             player.setDirection(Player.DIRECTION_LEFT);
                         } else {
                             player.setState(Player.State.IDLE);
-                            player.setDirection(0f);
                         }
                         break;
                 }
