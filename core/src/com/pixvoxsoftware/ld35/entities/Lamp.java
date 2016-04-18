@@ -9,26 +9,40 @@ import com.pixvoxsoftware.ld35.GameWorld;
 import com.pixvoxsoftware.ld35.WorldConstants;
 
 public class Lamp extends Entity {
+    private float offsetY;
+    private float offsetX;
     private PointLight light;
     private float x;
     private float y;
 
-    public Lamp(GameWorld world, TextureRegion textureRegion, float x, float y) {
+    public Lamp(GameWorld world, TextureRegion textureRegion, float offsetX, float offsetY, float x, float y) {
         sprite = new Sprite(textureRegion);
         sprite.setPosition(x, y);
         this.world = world;
         this.x = x;
         this.y = y;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
         createLight();
     }
 
-    public Lamp(GameWorld world, Sprite sprite, float x, float y) {
+    public Lamp(GameWorld world, TextureRegion textureRegion, float x, float y) {
+        this(world, textureRegion, 0, 0, x, y);
+    }
+
+    public Lamp(GameWorld world, Sprite sprite, float offsetX, float offsetY, float x, float y) {
         this.sprite = sprite;
         sprite.setPosition(x, y);
         this.world = world;
         this.x = x;
         this.y = y;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
         createLight();
+    }
+
+    public Lamp(GameWorld world, Sprite sprite, float x, float y) {
+        this(world, sprite, 0, 0, x, y);
     }
 
     @Override
@@ -62,7 +76,7 @@ public class Lamp extends Entity {
     }
 
     private void createLight() {
-        light = new PointLight(world.rayHandler, 1000, new Color(1, 228f / 255f, 181f / 255f, 1), 120, x + 16, y + 16);
+        light = new PointLight(world.rayHandler, 1000, new Color(1, 228f / 255f, 181f / 255f, 1), 120, x + offsetX, y + offsetY);
     }
 
     public void setActive(boolean enabled) {

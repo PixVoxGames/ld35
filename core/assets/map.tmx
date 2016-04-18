@@ -18,7 +18,7 @@
   <object id="70" name="Lamp" gid="31" x="1056" y="1952" width="32" height="32"/>
   <object id="77" name="Chest" gid="187" x="1952" y="2016" width="32" height="32"/>
   <object id="101" name="Spawn" x="1710.75" y="1925.44" width="20" height="15"/>
-  <object id="107" name="Torch" gid="175" x="1952" y="1888" width="32" height="32"/>
+  <object id="107" name="Torch" gid="175" x="1952" y="1926.41" width="32" height="32"/>
   <object id="110" name="GuardSpawn" x="2176" y="1920" width="32" height="32">
    <properties>
     <property name="stepsLeft" type="int" value="0"/>

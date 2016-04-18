@@ -105,10 +105,10 @@ public class GameWorld {
                 if (mapObject instanceof TiledMapTileMapObject) {
                     TiledMapTileMapObject tileMapObject = (TiledMapTileMapObject) mapObject;
                     if (tileMapObject.getName().equals("Lamp")) {
-                        addEntity(new Lamp(this, tileMapObject.getTextureRegion(), tileMapObject.getX(), tileMapObject.getY()));
+                        addEntity(new Lamp(this, tileMapObject.getTextureRegion(), 16, 16, tileMapObject.getX(), tileMapObject.getY()));
                     } else if (tileMapObject.getName().equals("Torch")) {
                         AnimatedSprite sprite = new AnimatedSprite(Gdx.files.internal("torch.png"), 8, 0.06f);
-                        addEntity(new Lamp(this, sprite, tileMapObject.getX(), tileMapObject.getY()));
+                        addEntity(new Lamp(this, sprite, sprite.getWidth() / 2 + 4, 5 * sprite.getHeight() / 12, tileMapObject.getX(), tileMapObject.getY()));
                     } else {
                         addEntity(new Box(this, tileMapObject.getTile().getTextureRegion(),
                                 tileMapObject.getX(), tileMapObject.getY()));

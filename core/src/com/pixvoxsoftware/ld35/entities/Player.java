@@ -24,7 +24,7 @@ public class Player extends Entity {
 
     public Player(GameWorld world, float x, float y) {
         this.world = world;
-        sprite = new AnimatedSprite(Gdx.files.internal("gg_w/out.png"), 12, 0.05f);
+        sprite = new AnimatedSprite(Gdx.files.internal("gg_w.png"), 12, 0.05f);
         state = State.IDLE;
         direction = 0f;
         createPhysicsBody();
