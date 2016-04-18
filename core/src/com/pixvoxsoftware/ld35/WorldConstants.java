@@ -13,6 +13,6 @@ public class WorldConstants {
 
     public static final int MAX_RENDER_PASSES = 4;
 
-    public static final float MIN_CONSUMING_DISTANCE = 1f;
+    public static final float MIN_CONSUMING_DISTANCE = 0.5f;
     public static final float PLAYER_CONSUMING_SPEED = 60f;
 }

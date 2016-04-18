@@ -87,7 +87,7 @@ public abstract class Entity {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = polygonShape;
-        fixtureDef.density = 0.0001f;
+        fixtureDef.density = 0.000001f;
         fixtureDef.friction = 0;
         fixtureDef.restitution = 0;
         fixtureDef.filter.maskBits = getCollisionMask();

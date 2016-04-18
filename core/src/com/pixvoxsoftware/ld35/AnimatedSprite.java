@@ -103,4 +103,8 @@ public class AnimatedSprite extends Sprite{
     public boolean isFinishedAnimation() {
         return animation.isAnimationFinished(currentTime);
     }
+
+    public void setNoRepeatAndReversed() {
+        animation.setPlayMode(Animation.PlayMode.REVERSED);
+    }
 }
