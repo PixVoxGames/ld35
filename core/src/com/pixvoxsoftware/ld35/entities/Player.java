@@ -16,8 +16,6 @@ public class Player extends Entity {
     public enum State {
         IDLE,
         MOVE,
-        CONSUMING,
-        INDWELLING,
     }
 
     private float direction;
