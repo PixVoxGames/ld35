@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -24,6 +25,9 @@ public class GameScene implements Scene {
     private FollowCamera cam;
     private Box2DDebugRenderer debugRenderer;
     private OrthogonalTiledMapRenderer mapRenderer;
+
+    // Shaders
+    private ShaderProgram shaderGlow;
 
     private ParallaxBackground background;
 
@@ -50,6 +54,17 @@ public class GameScene implements Scene {
         background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/wall.png")), 0.8f));
         background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/light.png")), 0.95f));
         background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/rocks.png")), 1f));
+
+        loadShaders();
+    }
+
+    private void loadShaders() {
+        String vertexShader = Gdx.files.internal("shaders/glow_vertex.glsl").readString();
+        String fragmentShader = Gdx.files.internal("shaders/glow_fragment.glsl").readString();
+        shaderGlow = new ShaderProgram(vertexShader, fragmentShader);
+        if (!shaderGlow.isCompiled()) {
+            Loggers.game.error("Glow shader compilation error: ".concat(shaderGlow.getLog()));
+        }
     }
 
     @Override
@@ -80,6 +95,25 @@ public class GameScene implements Scene {
         staticSpritesBatch.end();
         mapRenderer.setView(cam);
         mapRenderer.render();
+
+        /*
+        shaderGlow.begin();
+        shaderGlow.setUniformf("u_viewportInverse", new Vector2(1f / 256, 1f / 256));
+        shaderGlow.setUniformf("u_offset", 1f);
+        shaderGlow.setUniformf("u_step", Math.min(3f, 128/ 70f));
+        shaderGlow.setUniformf("u_color", new Vector3(0x34 / 255f, 0xb5 / 255f, 0x7f / 255f));
+        shaderGlow.end();
+        spriteBatch.setShader(shaderGlow);
+
+        spriteBatch.begin();
+        for (Entity entity : world.getEntities()) {
+            if (entity.isVisible()) {
+                entity.getSprite().draw(spriteBatch);
+            }
+        }
+        spriteBatch.end();
+        spriteBatch.setShader(null);
+        */
 
         spriteBatch.begin();
         for (int renderPass = 0; renderPass < WorldConstants.MAX_RENDER_PASSES; renderPass++) {

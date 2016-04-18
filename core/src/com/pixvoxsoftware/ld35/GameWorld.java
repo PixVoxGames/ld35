@@ -14,10 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
 import com.pixvoxsoftware.ld35.controllers.PlayerController;
-import com.pixvoxsoftware.ld35.entities.Box;
-import com.pixvoxsoftware.ld35.entities.Entity;
-import com.pixvoxsoftware.ld35.entities.Lamp;
-import com.pixvoxsoftware.ld35.entities.Player;
+import com.pixvoxsoftware.ld35.entities.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -85,7 +82,6 @@ public class GameWorld {
         // Load entities
         Texture torchOffTexture = new Texture(Gdx.files.internal("torch_off.png"));
         for (MapObject mapObject : map.getLayers().get("Entities").getObjects()) {
-            if (!mapObject.getName().equals("Spawn")) {
                 if (mapObject instanceof TiledMapTileMapObject) {
                     TiledMapTileMapObject tileMapObject = (TiledMapTileMapObject) mapObject;
                     if (tileMapObject.getName().equals("Lamp")) {
@@ -98,10 +94,17 @@ public class GameWorld {
                         addEntity(new Box(this, tileMapObject.getTile().getTextureRegion(),
                                 tileMapObject.getX() / WorldConstants.PIXELS_PER_METER, tileMapObject.getY() / WorldConstants.PIXELS_PER_METER));
                     }
+                } else if (mapObject instanceof RectangleMapObject) {
+                    RectangleMapObject rectangleMapObject = (RectangleMapObject) mapObject;
+                    if(rectangleMapObject.getName().equals("GuardSpawn")) {
+                        addEntity(new Guard(this, rectangleMapObject.getRectangle().getX(),
+                                rectangleMapObject.getRectangle().getY(),
+                                Integer.valueOf((String)rectangleMapObject.getProperties().get("stepsLeft")),
+                                Integer.valueOf((String)rectangleMapObject.getProperties().get("stepsRight"))));
+                    }
                 } else {
                     Loggers.game.debug("unknown tile: {}", mapObject.getName());
                 }
-            }
         }
 
         Loggers.game.debug("game world initialized");
