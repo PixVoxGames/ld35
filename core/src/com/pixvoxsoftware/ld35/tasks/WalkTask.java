@@ -2,13 +2,17 @@ package com.pixvoxsoftware.ld35.tasks;
 
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
+import com.badlogic.gdx.ai.btree.annotation.TaskAttribute;
+import com.pixvoxsoftware.ld35.Loggers;
 import com.pixvoxsoftware.ld35.entities.Guard;
 
 public class WalkTask extends LeafTask<Guard> {
 
+    @TaskAttribute (required = true) public float direction = 1f;
+
     @Override
     public void start() {
-        getObject().setTargetX(getObject().getX() + getObject().getStepsRight()*32f);
+        getObject().setTargetX(getObject().getX() + getObject().getStepsRight()*direction);
         getObject().setState(Guard.State.MOVING);
     }
 
@@ -27,6 +31,8 @@ public class WalkTask extends LeafTask<Guard> {
 
     @Override
     protected Task<Guard> copyTo(Task<Guard> task) {
-        return (WalkTask) task;
+        WalkTask walkTask = (WalkTask) task;
+        walkTask.direction = direction;
+        return walkTask;
     }
 }

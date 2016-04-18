@@ -9,5 +9,7 @@ import walk:"com.pixvoxsoftware.ld35.tasks.WalkTask"
 # Tree definition (note that root is optional)
 root
   sequence
-    walk
+    walk direction:1
+    stand
+    walk direction:-1
     stand
