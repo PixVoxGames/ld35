@@ -159,7 +159,6 @@ public class PlayerController extends EntityController {
             consumedSoul.kill();
         }
         player.setConsumedSoul(null);
-        player.setState(Player.State.IDLE);
     }
 
     private boolean canEntitySurviveAfterSpit(Entity e) {
@@ -196,14 +195,16 @@ public class PlayerController extends EntityController {
     }
 
     private void preSpitSoul(Player player) {
-        AnimatedSprite sprite = new AnimatedSprite(Gdx.files.internal("gg_w_consuming.png"), 15, 0.02f);
-        sprite.setNoRepeatAndReversed();
-        Vector2 position = player.getConsumedSoul().getPosition();
-        sprite.setPosition(position.x - playerSprite.getWidth() / 2, position.y - playerSprite.getHeight() / 2);
-        player.setSprite(sprite);
-        isSpittingSoul = true;
-        isPlayingSpittingAnimation = true;
-        player.setVisible(true);
+        if (player.getConsumedSoul() != null) {
+            AnimatedSprite sprite = new AnimatedSprite(Gdx.files.internal("gg_w_consuming.png"), 15, 0.02f);
+            sprite.setNoRepeatAndReversed();
+            Vector2 position = player.getConsumedSoul().getPosition();
+            sprite.setPosition(position.x - playerSprite.getWidth() / 2, position.y - playerSprite.getHeight() / 2);
+            player.setSprite(sprite);
+            isSpittingSoul = true;
+            isPlayingSpittingAnimation = true;
+            player.setVisible(true);
+        }
     }
 
     @Override
