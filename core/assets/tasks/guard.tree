@@ -1,0 +1,13 @@
+#
+# Guard tree
+#
+
+# Alias definitions
+import stand:"com.pixvoxsoftware.ld35.tasks.StandTask"
+import walk:"com.pixvoxsoftware.ld35.tasks.WalkTask"
+
+# Tree definition (note that root is optional)
+root
+  sequence
+    walk
+    stand

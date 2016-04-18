@@ -2,6 +2,10 @@ package com.pixvoxsoftware.ld35;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.btree.BehaviorTree;
+import com.badlogic.gdx.ai.btree.utils.BehaviorTreeLibrary;
+import com.badlogic.gdx.ai.btree.utils.BehaviorTreeLibraryManager;
+import com.badlogic.gdx.ai.btree.utils.BehaviorTreeParser;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
@@ -13,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
+import com.pixvoxsoftware.ld35.controllers.GuardController;
 import com.pixvoxsoftware.ld35.controllers.PlayerController;
 import com.pixvoxsoftware.ld35.entities.*;
 
@@ -79,6 +84,11 @@ public class GameWorld {
 
         physicsWorld.setContactListener(new GroundCheckContactListener());
 
+        //AI
+
+        BehaviorTreeLibraryManager libraryManager = BehaviorTreeLibraryManager.getInstance();
+        libraryManager.setLibrary(new BehaviorTreeLibrary(BehaviorTreeParser.DEBUG_HIGH));
+
         // Load entities
         Texture torchOffTexture = new Texture(Gdx.files.internal("torch_off.png"));
         for (MapObject mapObject : map.getLayers().get("Entities").getObjects()) {
@@ -97,10 +107,16 @@ public class GameWorld {
                 } else if (mapObject instanceof RectangleMapObject) {
                     RectangleMapObject rectangleMapObject = (RectangleMapObject) mapObject;
                     if(rectangleMapObject.getName().equals("GuardSpawn")) {
-                        addEntity(new Guard(this, rectangleMapObject.getRectangle().getX(),
-                                rectangleMapObject.getRectangle().getY(),
+
+                        Guard guard = new Guard(this, rectangleMapObject.getRectangle().getX() / WorldConstants.PIXELS_PER_METER,
+                                rectangleMapObject.getRectangle().getY() / WorldConstants.PIXELS_PER_METER,
                                 Integer.valueOf((String)rectangleMapObject.getProperties().get("stepsLeft")),
-                                Integer.valueOf((String)rectangleMapObject.getProperties().get("stepsRight"))));
+                                Integer.valueOf((String)rectangleMapObject.getProperties().get("stepsRight")));
+
+                        BehaviorTree<Guard> tree = libraryManager.createBehaviorTree("tasks/guard.tree", guard);
+                        tree.setObject(guard);
+                        guard.setController(new GuardController(tree));
+                        addEntity(guard);
                     }
                 } else {
                     Loggers.game.debug("unknown tile: {}", mapObject.getName());
@@ -187,7 +203,7 @@ public class GameWorld {
 //                "player velocity y: " + Float.toString(player.physicsBody.getLinearVelocity().y),
                 "player grounded: " + Boolean.toString(player.isOnGround()),
                 "player direction: " + player.getDirection(),
-                "player state: " + player.getState().toString(),
+                "player state: " + player.getState().toString()
         };
     }
     public float getHeight() {
