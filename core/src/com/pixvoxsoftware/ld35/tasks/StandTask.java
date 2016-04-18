@@ -22,7 +22,6 @@ public class StandTask extends LeafTask<Guard> {
 
     @Override
     public Status execute() {
-        Loggers.game.debug("Idling");
         time += Gdx.graphics.getDeltaTime();
         if (time < timeToWait) {
             return Status.RUNNING;
