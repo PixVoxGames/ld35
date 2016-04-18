@@ -9,6 +9,8 @@ import com.pixvoxsoftware.ld35.GameWorld;
 import com.pixvoxsoftware.ld35.WorldConstants;
 
 public class Lamp extends Entity {
+    private Sprite spriteOn;
+    private Sprite spriteOff;
     private float offsetY;
     private float offsetX;
     private PointLight light;
@@ -16,8 +18,12 @@ public class Lamp extends Entity {
     private float y;
 
     public Lamp(GameWorld world, TextureRegion textureRegion, float offsetX, float offsetY, float x, float y) {
-        sprite = new Sprite(textureRegion);
-        sprite.setPosition(x, y);
+        spriteOn = new Sprite(textureRegion);
+        spriteOn.setSize(spriteOn.getWidth() / WorldConstants.PIXELS_PER_METER, spriteOn.getHeight() / WorldConstants.PIXELS_PER_METER);
+        spriteOff = spriteOn;
+        sprite = spriteOn;
+        spriteOn.setPosition(x, y);
+        spriteOff.setPosition(x, y);
         this.world = world;
         this.x = x;
         this.y = y;
@@ -30,9 +36,14 @@ public class Lamp extends Entity {
         this(world, textureRegion, 0, 0, x, y);
     }
 
-    public Lamp(GameWorld world, Sprite sprite, float offsetX, float offsetY, float x, float y) {
-        this.sprite = sprite;
-        sprite.setPosition(x, y);
+    public Lamp(GameWorld world, Sprite spriteOn, Sprite spriteOff, float offsetX, float offsetY, float x, float y) {
+        spriteOn.setSize(spriteOn.getWidth() / WorldConstants.PIXELS_PER_METER, spriteOn.getHeight() / WorldConstants.PIXELS_PER_METER);
+        spriteOff.setSize(spriteOff.getWidth() / WorldConstants.PIXELS_PER_METER, spriteOff.getHeight() / WorldConstants.PIXELS_PER_METER);
+        this.spriteOn = spriteOn;
+        this.spriteOff = spriteOff;
+        this.sprite = spriteOn;
+        spriteOn.setPosition(x, y);
+        spriteOff.setPosition(x, y);
         this.world = world;
         this.x = x;
         this.y = y;
@@ -42,7 +53,7 @@ public class Lamp extends Entity {
     }
 
     public Lamp(GameWorld world, Sprite sprite, float x, float y) {
-        this(world, sprite, 0, 0, x, y);
+        this(world, sprite, sprite, 0, 0, x, y);
     }
 
     @Override
@@ -70,16 +81,22 @@ public class Lamp extends Entity {
         return sprite.getY();
     }
 
-    @Override
-    public void createPhysicsBody() {
-        super.createPhysicsBody();
-    }
-
     private void createLight() {
-        light = new PointLight(world.rayHandler, 1000, new Color(1, 228f / 255f, 181f / 255f, 1), 120, x + offsetX, y + offsetY);
+        light = new PointLight(
+                world.rayHandler,
+                1000, new Color(1, 228f / 255f, 181f / 255f, 1),
+                120 / WorldConstants.PIXELS_PER_METER,
+                (x + offsetX),
+                (y + offsetY)
+        );
     }
 
     public void setActive(boolean enabled) {
+        if (enabled) {
+            sprite = spriteOn;
+        } else {
+            sprite = spriteOff;
+        }
         light.setActive(enabled);
     }
 
@@ -94,6 +111,11 @@ public class Lamp extends Entity {
 
     @Override
     public short getCollisionMask() {
+        return 0;
+    }
+
+    @Override
+    public int renderPass() {
         return 0;
     }
 }

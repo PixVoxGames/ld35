@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.pixvoxsoftware.ld35.GameWorld;
+import com.pixvoxsoftware.ld35.WorldConstants;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
 
 public abstract class Entity {
@@ -65,7 +66,7 @@ public abstract class Entity {
     }
 
     public Vector2 getPosition() {
-        return physicsBody.getPosition();
+        return physicsBody.getTransform().getPosition();
     }
 
     public float getX() {
@@ -97,7 +98,8 @@ public abstract class Entity {
         polygonShape.dispose();
 
         PolygonShape footShape = new PolygonShape();
-        footShape.setAsBox(0.9f * sprite.getWidth() / 2, 2, new Vector2(0, -sprite.getHeight() / 2 - 2), 0);
+        Vector2 offset = new Vector2(0, (-sprite.getHeight() / 2 - 2f / WorldConstants.PIXELS_PER_METER));
+        footShape.setAsBox(0.9f * sprite.getWidth() / 2, 2 / WorldConstants.PIXELS_PER_METER, offset, 0);
 
         FixtureDef footFixtureDef = new FixtureDef();
         footFixtureDef.shape = footShape;
@@ -127,4 +129,5 @@ public abstract class Entity {
     public abstract boolean isGround();
     public abstract short getCategory();
     public abstract short getCollisionMask();
+    public abstract int renderPass();
 }

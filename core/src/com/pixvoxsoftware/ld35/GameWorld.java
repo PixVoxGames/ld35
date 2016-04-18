@@ -2,6 +2,8 @@ package com.pixvoxsoftware.ld35;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -25,54 +27,30 @@ public class GameWorld {
     private Player player;
     private ArrayList<Entity> entities = new ArrayList<>();
     private TiledMap map;
-    private Vector2 gravity = new Vector2(0, -1000);
+    private Vector2 gravity = new Vector2(0, -10);
     private float accumulator;
     public World physicsWorld;
-    public RayHandler rayHandler;
+    public RayHandler rayHandler = null;
 
     public GameWorld() {
         physicsWorld = new World(gravity, true);
 
         rayHandler = new RayHandler(new World(gravity, true));
         rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.5f);
-//        rayHandler.setShadows(false);
-
-        // fake ground
-        BodyDef groundBodyDef = new BodyDef();
-        groundBodyDef.position.set(new Vector2(1000f, 1));
-        Body groundBody = physicsWorld.createBody(groundBodyDef);
-        PolygonShape groundBox = new PolygonShape();
-        groundBox.setAsBox(1000f, 0.5f);
-        Fixture fixture = groundBody.createFixture(groundBox, 0.0f);
-        groundBox.dispose();
-        // just for testing
-        fixture.setUserData(new Entity() {
-            @Override
-            public boolean isGround() {
-                return true;
-            }
-
-            @Override
-            public short getCategory() {
-                return 0;
-            }
-
-            @Override
-            public short getCollisionMask() {
-                return (short) 0xffff;
-            }
-        });
-
 
         map = new TmxMapLoader().load("map.tmx");
         for (MapObject mapObject : map.getLayers().get("Physics").getObjects()) {
             RectangleMapObject platformObject = (RectangleMapObject) mapObject;
             BodyDef platformBodyDef = new BodyDef();
-            Vector2 position = platformObject.getRectangle().getCenter(new Vector2(0, 0));
+            Vector2 position = platformObject.getRectangle().getCenter(new Vector2(0, 0)).scl(1f / WorldConstants.PIXELS_PER_METER);
             platformBodyDef.position.set(position);
             Body platformBody = physicsWorld.createBody(platformBodyDef);
             PolygonShape platformBox = new PolygonShape();
-            platformBox.setAsBox(platformObject.getRectangle().getWidth()/2f, platformObject.getRectangle().getHeight()/2f);
+            platformBox.setAsBox(
+                    platformObject.getRectangle().getWidth() / 2f / WorldConstants.PIXELS_PER_METER,
+                    platformObject.getRectangle().getHeight() / 2f / WorldConstants.PIXELS_PER_METER
+            );
+            Loggers.game.debug("physics {}", platformObject.getName());
             platformBody.createFixture(platformBox, 0.0f).setUserData(new Entity() {
                 @Override
                 public boolean isGround() {
@@ -88,30 +66,37 @@ public class GameWorld {
                 public short getCollisionMask() {
                     return WorldConstants.ANY_CATEGORY;
                 }
+
+                @Override
+                public int renderPass() {
+                    return 0;
+                }
             });
             platformBox.dispose();
         }
 
         RectangleMapObject spawnEntity = (RectangleMapObject) map.getLayers().get("Entities").getObjects().get("Spawn");
 
-        player = new Player(this, spawnEntity.getRectangle().getX(), spawnEntity.getRectangle().getY());
+        player = new Player(this, spawnEntity.getRectangle().getX() / WorldConstants.PIXELS_PER_METER, spawnEntity.getRectangle().getY() / WorldConstants.PIXELS_PER_METER);
         addEntity(player);
 
         physicsWorld.setContactListener(new GroundCheckContactListener());
 
         // Load entities
+        Texture torchOffTexture = new Texture(Gdx.files.internal("torch_off.png"));
         for (MapObject mapObject : map.getLayers().get("Entities").getObjects()) {
             if (!mapObject.getName().equals("Spawn")) {
                 if (mapObject instanceof TiledMapTileMapObject) {
                     TiledMapTileMapObject tileMapObject = (TiledMapTileMapObject) mapObject;
                     if (tileMapObject.getName().equals("Lamp")) {
-                        addEntity(new Lamp(this, tileMapObject.getTextureRegion(), 16, 16, tileMapObject.getX(), tileMapObject.getY()));
+                        addEntity(new Lamp(this, tileMapObject.getTextureRegion(), 16 / WorldConstants.PIXELS_PER_METER, 16 / WorldConstants.PIXELS_PER_METER, tileMapObject.getX() / WorldConstants.PIXELS_PER_METER, tileMapObject.getY() / WorldConstants.PIXELS_PER_METER));
                     } else if (tileMapObject.getName().equals("Torch")) {
-                        AnimatedSprite sprite = new AnimatedSprite(Gdx.files.internal("torch.png"), 8, 0.06f);
-                        addEntity(new Lamp(this, sprite, sprite.getWidth() / 2 + 4, 5 * sprite.getHeight() / 12, tileMapObject.getX(), tileMapObject.getY()));
+                        AnimatedSprite spriteOn = new AnimatedSprite(Gdx.files.internal("torch.png"), 8, 0.06f);
+                        Sprite spriteOff = new Sprite(torchOffTexture);
+                        addEntity(new Lamp(this, spriteOn, spriteOff, spriteOn.getWidth() / 2, 5 * spriteOn.getHeight() / 12, tileMapObject.getX() / WorldConstants.PIXELS_PER_METER, tileMapObject.getY() / WorldConstants.PIXELS_PER_METER));
                     } else {
                         addEntity(new Box(this, tileMapObject.getTile().getTextureRegion(),
-                                tileMapObject.getX(), tileMapObject.getY()));
+                                tileMapObject.getX() / WorldConstants.PIXELS_PER_METER, tileMapObject.getY() / WorldConstants.PIXELS_PER_METER));
                     }
                 } else {
                     Loggers.game.debug("unknown tile: {}", mapObject.getName());
@@ -188,15 +173,6 @@ public class GameWorld {
 
     public Vector2 getGravity() {
         return gravity;
-    }
-
-    public Entity getFirstEntityWithPoint(float x, float y) {
-        for (Entity entity : entities) {
-            if (entity.getBoundingRectangle().contains(x, y)) {
-                return entity;
-            }
-        }
-        return null;
     }
 
     public String[] getDebugStrings() {

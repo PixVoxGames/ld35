@@ -10,6 +10,7 @@ public class Box extends Entity {
     public Box(GameWorld world, TextureRegion textureRegion, float x, float y) {
         this.world = world;
         sprite = new Sprite(textureRegion);
+        sprite.setSize(sprite.getWidth() / WorldConstants.PIXELS_PER_METER, sprite.getHeight() / WorldConstants.PIXELS_PER_METER);
         createPhysicsBody();
         setPosition(x, y);
         setController(new BoxController());
@@ -28,5 +29,10 @@ public class Box extends Entity {
     @Override
     public short getCollisionMask() {
         return WorldConstants.OBSTACLE_CATEGORY;
+    }
+
+    @Override
+    public int renderPass() {
+        return 2;
     }
 }

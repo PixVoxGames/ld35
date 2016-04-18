@@ -15,7 +15,9 @@ public class Player extends Entity {
 
     public enum State {
         IDLE,
-        MOVE
+        MOVE,
+        CONSUMING,
+        INDWELLING,
     }
 
     private float direction;
@@ -76,5 +78,10 @@ public class Player extends Entity {
     @Override
     public short getCollisionMask() {
         return WorldConstants.OBSTACLE_CATEGORY | WorldConstants.SOUL_CATEGORY;
+    }
+
+    @Override
+    public int renderPass() {
+        return 1;
     }
 }

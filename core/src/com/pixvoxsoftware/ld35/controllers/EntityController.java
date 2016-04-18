@@ -2,6 +2,7 @@ package com.pixvoxsoftware.ld35.controllers;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.pixvoxsoftware.ld35.WorldConstants;
 import com.pixvoxsoftware.ld35.entities.Entity;
 
 public abstract class EntityController {

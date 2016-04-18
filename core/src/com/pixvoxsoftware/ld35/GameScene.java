@@ -3,17 +3,20 @@ package com.pixvoxsoftware.ld35;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.pixvoxsoftware.ld35.entities.Entity;
 
 
 public class GameScene implements Scene {
 
+    private OrthographicCamera physicCam;
     private SpriteBatch spriteBatch;
     private SpriteBatch staticSpritesBatch;
     private SpriteBatch fontBatch;
@@ -39,10 +42,10 @@ public class GameScene implements Scene {
         world = new GameWorld();
         SCREEN_WIDTH = Gdx.graphics.getWidth();
         SCREEN_HEIGHT = Gdx.graphics.getHeight();
-        cam = new FollowCamera(SCREEN_WIDTH, SCREEN_HEIGHT, world.getPlayer());
+        cam = new FollowCamera(SCREEN_WIDTH / WorldConstants.PIXELS_PER_METER, SCREEN_HEIGHT / WorldConstants.PIXELS_PER_METER, world.getPlayer());
         cam.setBounds(0, 0, world.getWidth(), world.getHeight());
         debugRenderer = new Box2DDebugRenderer();
-        mapRenderer = new OrthogonalTiledMapRenderer(world.getMap());
+        mapRenderer = new OrthogonalTiledMapRenderer(world.getMap(), 1f / WorldConstants.PIXELS_PER_METER);
         background = new ParallaxBackground(cam);
         background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/wall.png")), 0.8f));
         background.addLayer(new ParallaxLayer(new Texture(Gdx.files.internal("background/light.png")), 0.95f));
@@ -51,6 +54,10 @@ public class GameScene implements Scene {
 
     @Override
     public void draw() {
+        if (Gdx.input.isKeyPressed(Input.Keys.F7)) {
+            cam.zoom += 1;
+            cam.update();
+        }
         world.act();
         cam.update();
         spriteBatch.setProjectionMatrix(cam.combined);
@@ -71,14 +78,15 @@ public class GameScene implements Scene {
                     layer.getY());
         }
         staticSpritesBatch.end();
-
         mapRenderer.setView(cam);
         mapRenderer.render();
 
         spriteBatch.begin();
-        for (Entity entity : world.getEntities()) {
-            if (entity.isVisible()) {
-                entity.getSprite().draw(spriteBatch);
+        for (int renderPass = 0; renderPass < WorldConstants.MAX_RENDER_PASSES; renderPass++) {
+            for (Entity entity : world.getEntities()) {
+                if (entity.renderPass() == renderPass && entity.isVisible()) {
+                    entity.getSprite().draw(spriteBatch);
+                }
             }
         }
         spriteBatch.end();

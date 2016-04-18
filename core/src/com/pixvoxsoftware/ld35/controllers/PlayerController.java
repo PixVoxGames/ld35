@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
@@ -19,6 +18,7 @@ import com.pixvoxsoftware.ld35.entities.Player;
 public class PlayerController extends EntityController {
     private EntityController consumedSoulController;
     private Sprite playerSprite;
+    private Entity consumingSoul = null;
 
     @Override
     public void act(Entity entity) {
@@ -34,26 +34,49 @@ public class PlayerController extends EntityController {
                 physicsBody = player.physicsBody;
             }
 
-            if (player.getSprite() instanceof AnimatedSprite) {
-                AnimatedSprite sprite = (AnimatedSprite) player.getSprite();
-                if (player.getDirection() == Player.DIRECTION_LEFT) {
-                    sprite.setMirroredVertically(true);
+            if (consumingSoul != null && player.getState() == Player.State.CONSUMING) {
+                Vector2 playerPosition = player.getPosition();
+                Vector2 consumingSoulPosition = consumingSoul.getPosition();
+                Vector2 direction = new Vector2(consumingSoulPosition.x - playerPosition.x, consumingSoulPosition.y - consumingSoulPosition.y);
+                if (direction.len() <= WorldConstants.MIN_CONSUMING_DISTANCE) {
+                    consumeSoul(player, consumingSoul);
+                    consumingSoul = null;
+                    player.setState(Player.State.INDWELLING);
                 } else {
-                    sprite.setMirroredVertically(false);
+                    direction = direction.nor().scl(WorldConstants.PLAYER_CONSUMING_SPEED);
+                    if (player.getSprite() instanceof AnimatedSprite) {
+                        AnimatedSprite sprite = (AnimatedSprite) player.getSprite();
+                        if (direction.x < 0) {
+                            sprite.setMirroredVertically(true);
+                        } else {
+                            sprite.setMirroredVertically(false);
+                        }
+                    }
+                    Vector2 impulse = direction.sub(physicsBody.getLinearVelocity()).scl(physicsBody.getMass());
+                    physicsBody.applyLinearImpulse(impulse, physicsBody.getWorldCenter(), true);
                 }
-            }
+            } else {
+                if (player.getSprite() instanceof AnimatedSprite) {
+                    AnimatedSprite sprite = (AnimatedSprite) player.getSprite();
+                    if (player.getDirection() == Player.DIRECTION_LEFT) {
+                        sprite.setMirroredVertically(true);
+                    } else {
+                        sprite.setMirroredVertically(false);
+                    }
+                }
 
-            // movement
-            if (physicsBody != null) {
-                if (player.getState() == Player.State.MOVE) {
-                    float impulseX = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_X_VELOCITY * player.getDirection() - physicsBody.getLinearVelocity().x);
-                    physicsBody.applyLinearImpulse(new Vector2(impulseX, 0), physicsBody.getWorldCenter(), true);
-                } else {
-                    physicsBody.applyLinearImpulse(new Vector2(-physicsBody.getLinearVelocity().x * physicsBody.getMass(), 0), physicsBody.getWorldCenter(), true);
-                }
-                if (player.isJumping) {
-                    float impulseY = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_Y_VELOCITY - physicsBody.getLinearVelocity().y);
-                    physicsBody.applyLinearImpulse(new Vector2(0, impulseY), physicsBody.getWorldCenter(), true);
+                // movement
+                if (physicsBody != null) {
+                    if (player.getState() == Player.State.MOVE) {
+                        float impulseX = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_X_VELOCITY * player.getDirection() - physicsBody.getLinearVelocity().x);
+                        physicsBody.applyLinearImpulse(new Vector2(impulseX, 0), physicsBody.getWorldCenter(), true);
+                    } else {
+                        physicsBody.applyLinearImpulse(new Vector2(-physicsBody.getLinearVelocity().x * physicsBody.getMass(), 0), physicsBody.getWorldCenter(), true);
+                    }
+                    if (player.isJumping) {
+                        float impulseY = physicsBody.getMass() * (WorldConstants.PLAYER_MAX_Y_VELOCITY - physicsBody.getLinearVelocity().y);
+                        physicsBody.applyLinearImpulse(new Vector2(0, impulseY), physicsBody.getWorldCenter(), true);
+                    }
                 }
             }
         } else {
@@ -62,9 +85,16 @@ public class PlayerController extends EntityController {
     }
 
     public boolean onTouchDown(Player player, float worldX, float worldY, int pointer, int button) {
-        Entity entity = player.world.getFirstEntityWithPoint(worldX, worldY);
-        if (entity != null && player.getConsumedSoul() == null && canConsumeSoul(player, entity)) {
-            consumeSoul(player, entity);
+        Entity targetEntity = null;
+        for (Entity entity : player.world.getEntities()) {
+            if (entity.getBoundingRectangle().contains(worldX, worldY) && !player.equals(entity)) {
+                targetEntity = entity;
+                break;
+            }
+        }
+        if (targetEntity != null && player.getConsumedSoul() == null && canConsumeSoul(player, targetEntity)) {
+            consumingSoul = targetEntity;
+            player.setState(Player.State.CONSUMING);
         }
         return true;
     }
@@ -99,6 +129,7 @@ public class PlayerController extends EntityController {
             consumedSoul.kill();
         }
         player.setConsumedSoul(null);
+        player.setState(Player.State.IDLE);
     }
 
     private boolean canEntitySurviveAfterSpit(Entity e) {
@@ -118,7 +149,9 @@ public class PlayerController extends EntityController {
     private boolean canConsumeSoul(Player player, Entity entity) {
         MyRayCastCallback rayCastCallback = new MyRayCastCallback();
         Loggers.game.debug("rayCastCallback: {} -> {}", player.getPosition(), entity.getPosition());
-        entity.world.physicsWorld.rayCast(rayCastCallback, player.getPosition(), entity.getPosition());
+        Vector2 pointA = player.getPosition();
+        Vector2 pointB = entity.getPosition();
+        entity.world.physicsWorld.rayCast(rayCastCallback, pointA, pointB);
         return rayCastCallback.hits <= 1;
     }
 
