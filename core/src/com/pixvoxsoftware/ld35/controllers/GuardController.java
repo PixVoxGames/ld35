@@ -6,6 +6,7 @@ import com.pixvoxsoftware.ld35.Loggers;
 import com.pixvoxsoftware.ld35.WorldConstants;
 import com.pixvoxsoftware.ld35.entities.Entity;
 import com.pixvoxsoftware.ld35.entities.Guard;
+import com.pixvoxsoftware.ld35.entities.Player;
 
 public class GuardController extends EntityController {
 
@@ -19,8 +20,16 @@ public class GuardController extends EntityController {
     @Override
     public void act(Entity entity) {
         super.act(entity);
-        behaviorTree.step();
         Guard guard = (Guard) entity;
+        for (Entity entity1 : guard.getObjectsAround()) {
+            if (entity1 instanceof Player) {
+                Player player = (Player) entity1;
+                if (player.getConsumedSoul() == null || !player.getConsumedSoul().physicsBody.getLinearVelocity().equals(Vector2.Zero)) {
+                    Loggers.game.debug("ALERT! HOSTILE DETECTED");
+                }
+            }
+        }
+        behaviorTree.step();
         if (guard.getState() == Guard.State.MOVING) {
             float impulseX = guard.physicsBody.getMass() * (WorldConstants.PLAYER_MAX_X_VELOCITY * Math.signum(guard.getTargetX() - guard.getX()) - guard.physicsBody.getLinearVelocity().x);
             guard.physicsBody.applyLinearImpulse(new Vector2(impulseX, 0), guard.physicsBody.getWorldCenter(), true);

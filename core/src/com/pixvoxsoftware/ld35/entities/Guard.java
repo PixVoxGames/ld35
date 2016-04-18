@@ -56,7 +56,7 @@ public class Guard extends Entity {
         this.targetX = targetX;
     }
 
-    private ArrayList<Entity> getObjectsAround() {
+    public ArrayList<Entity> getObjectsAround() {
         return world.getEntitiesInArea(getX(), getY(), visionRadius);
     }
 

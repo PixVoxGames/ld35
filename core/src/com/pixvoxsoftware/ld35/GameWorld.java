@@ -111,7 +111,7 @@ public class GameWorld {
                         Guard guard = new Guard(this, rectangleMapObject.getRectangle().getX() / WorldConstants.PIXELS_PER_METER,
                                 rectangleMapObject.getRectangle().getY() / WorldConstants.PIXELS_PER_METER,
                                 Integer.valueOf((String)rectangleMapObject.getProperties().get("stepsLeft")),
-                                Integer.valueOf((String)rectangleMapObject.getProperties().get("stepsRight")), 2f);
+                                Integer.valueOf((String)rectangleMapObject.getProperties().get("stepsRight")), 3f);
 
                         BehaviorTree<Guard> tree = libraryManager.createBehaviorTree("tasks/guard.tree", guard);
                         tree.setObject(guard);
@@ -219,7 +219,7 @@ public class GameWorld {
     public ArrayList<Entity> getEntitiesInArea(float x, float y, float radius) {
         ArrayList<Entity> entities = new ArrayList<>();
         for (Entity entity : this.entities) {
-            if (Math.hypot(entity.getX() - x, entity.getY() - y) <= radius * 32 / WorldConstants.PIXELS_PER_METER) {
+            if (Math.hypot(entity.getSprite().getX() - x, entity.getSprite().getY() - y) <= radius * 32 / WorldConstants.PIXELS_PER_METER) {
                 entities.add(entity);
             }
         }
