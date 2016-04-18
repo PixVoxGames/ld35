@@ -20,6 +20,13 @@ public class PlayerController extends EntityController {
     private Sprite playerSprite;
     private Entity consumingSoul = null;
 
+    private enum ConsumingAnimationState {
+        PLAYING,
+        FINISHED,
+        NOT_PLAYING;
+    }
+    private ConsumingAnimationState consumingAnimationState = ConsumingAnimationState.NOT_PLAYING;
+
     @Override
     public void act(Entity entity) {
         super.act(entity);
@@ -34,14 +41,28 @@ public class PlayerController extends EntityController {
                 physicsBody = player.physicsBody;
             }
 
-            if (consumingSoul != null && player.getState() == Player.State.CONSUMING) {
+            if (consumingSoul != null) {
                 Vector2 playerPosition = player.getPosition();
                 Vector2 consumingSoulPosition = consumingSoul.getPosition();
                 Vector2 direction = new Vector2(consumingSoulPosition.x - playerPosition.x, consumingSoulPosition.y - consumingSoulPosition.y);
-                if (direction.len() <= WorldConstants.MIN_CONSUMING_DISTANCE) {
-                    consumeSoul(player, consumingSoul);
-                    consumingSoul = null;
-                    player.setState(Player.State.INDWELLING);
+                if (consumingAnimationState == ConsumingAnimationState.PLAYING) {
+                    AnimatedSprite sprite = (AnimatedSprite) player.getSprite();
+                    if (sprite.isFinishedAnimation()) {
+                        player.setSprite(playerSprite);
+                        playerSprite = null;
+                        consumeSoul(player, consumingSoul);
+                        consumingSoul = null;
+                        player.setState(Player.State.INDWELLING);
+                        consumingAnimationState = ConsumingAnimationState.NOT_PLAYING;
+                    }
+                } if (consumingAnimationState == ConsumingAnimationState.NOT_PLAYING && direction.len() <= WorldConstants.MIN_CONSUMING_DISTANCE) {
+                    physicsBody.applyLinearImpulse(physicsBody.getLinearVelocity().scl(-physicsBody.getMass()), physicsBody.getWorldCenter(), true);
+                    AnimatedSprite sprite = new AnimatedSprite(Gdx.files.internal("gg_w_consuming.png"), 15, 0.02f);
+                    sprite.setNoRepeat();
+                    playerSprite = player.getSprite();
+                    sprite.setPosition(playerSprite.getX(), playerSprite.getY());
+                    player.setSprite(sprite);
+                    consumingAnimationState = ConsumingAnimationState.PLAYING;
                 } else {
                     direction = direction.nor().scl(WorldConstants.PLAYER_CONSUMING_SPEED);
                     if (player.getSprite() instanceof AnimatedSprite) {
@@ -220,6 +241,7 @@ public class PlayerController extends EntityController {
             case Input.Keys.A:
                 switch (player.getState()) {
                     case MOVE:
+                    case INDWELLING:
                         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                             player.setState(Player.State.MOVE);
                             player.setDirection(Player.DIRECTION_RIGHT);
@@ -233,6 +255,7 @@ public class PlayerController extends EntityController {
             case Input.Keys.D:
                 switch (player.getState()) {
                     case MOVE:
+                    case INDWELLING:
                         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                             player.setState(Player.State.MOVE);
                             player.setDirection(Player.DIRECTION_LEFT);

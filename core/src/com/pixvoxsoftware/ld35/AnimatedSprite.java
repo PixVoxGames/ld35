@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 
 public class AnimatedSprite extends Sprite{
-    private Animation walkAnimation;
+    private Animation animation;
     private Texture animationAtlas;
     private TextureRegion[] frames;
     private TextureRegion currentFrame;
@@ -23,7 +23,8 @@ public class AnimatedSprite extends Sprite{
         TextureRegion tmp[][] = TextureRegion.split(animationAtlas, animationAtlas.getWidth() / frameCount, animationAtlas.getHeight());
         frames = new TextureRegion[frameCount];
         System.arraycopy(tmp[0], 0, frames, 0, frameCount);
-        walkAnimation = new Animation(frameTime, frames);
+        animation = new Animation(frameTime, frames);
+        animation.setPlayMode(Animation.PlayMode.LOOP);
         currentTime = 0f;
         width = animationAtlas.getWidth() / frameCount / WorldConstants.PIXELS_PER_METER;
         height = animationAtlas.getHeight() / WorldConstants.PIXELS_PER_METER;
@@ -36,11 +37,13 @@ public class AnimatedSprite extends Sprite{
     @Override
     public void draw(Batch batch) {
         currentTime += Gdx.graphics.getDeltaTime();
-        currentFrame = walkAnimation.getKeyFrame(currentTime, true);
-        if (mirroredVertically) {
-            batch.draw(currentFrame, position.x + width, position.y, -width, height);
-        } else {
-            batch.draw(currentFrame, position.x, position.y, width, height);
+        if (animation.getPlayMode() == Animation.PlayMode.LOOP || (animation.getPlayMode() != Animation.PlayMode.LOOP && !animation.isAnimationFinished(currentTime))) {
+            currentFrame = animation.getKeyFrame(currentTime, true);
+            if (mirroredVertically) {
+                batch.draw(currentFrame, position.x + width, position.y, -width, height);
+            } else {
+                batch.draw(currentFrame, position.x, position.y, width, height);
+            }
         }
     }
 
@@ -87,5 +90,17 @@ public class AnimatedSprite extends Sprite{
 
     public void setMirroredVertically(boolean mirroredVertically) {
         this.mirroredVertically = mirroredVertically;
+    }
+
+    public void setNoRepeat() {
+        animation.setPlayMode(Animation.PlayMode.NORMAL);
+    }
+
+    public void reset() {
+        currentTime = 0;
+    }
+
+    public boolean isFinishedAnimation() {
+        return animation.isAnimationFinished(currentTime);
     }
 }
