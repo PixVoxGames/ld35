@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="100">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="108">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="529" columns="23">
   <image source="tileset.png" width="736" height="736"/>
  </tileset>
  <layer name="Tile Layer 1" width="256" height="64">
   <data encoding="base64" compression="zlib">
-   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
+   eJzt3U1qVEEUxfFqMUOHBp07NMSRE4eGxA+cOEzQPUR0D4ruQdEFOFPMHiJmDxGzh4ixDgYMzTvd9qC45a3/Dwpjd/NyEQ5V71Vbd7OUcqvkdSW6AKBj23XsRBfR0I3oAoCOPanjUnQRDd2JLgDo2PM6rkcX0dDj6AKAjr0uued/8g9470vu+Z/1P+B9Kbmf/zP/A963wvN/YFQ/6ngaXURDrP8B71cdL6KLaIj1P+BdnZXyJrqIhsg/4N2s+f8QXURD5B/w7tb8H0QX0RD3/4C3W/N/FF1EQ/z/H8Dbr/k/iS6iIfIPeC9r/s+ii2iI+3/Ae1vzvz6LrqIdvv8DeJ9q9jcS55/1P+Ad1uxvJc4/8z/gHdfs7yXOP/t/gHdas/8scf6Z/wFP6/9XifPP/T/gaf3/LnH+Wf8Dntb/nxPnn/kf8K7V8TVx/pn/AW+zju/kHxiS+n9kfv5P/gFP/T8yP//n+/+Ap/4fmZ//s/8PeOr/kfn5P/M/4Kn/R+bn/+z/AZ76f2R+/s/8D3jq/5G5/x/3/4Cn/h+Z+/+x/gc89f/I3P+P/AOe+n9k7v9H/gFP/T/o/weMSf0/6P8HjGk3ef8/1v+At0//P2BY6v+Ref+f+R/w1P+D/X9gTOr/kXn/n+f/gHeYfP+f+3/AO06+/8/3/wHvlP1/YFg6/y/z/j/3/4Cn8//Y/wfGpPP/DqKLaIj9P8DT+X9H0UU0RP4BT+f/nUQX0RD3/4Cn8//OootoiP0/wNP5f+uJz/9k/Q94Ov9vg/wDQ9L5f1uJ88/9P+Dp/L+9xPln/x/wdP5f5v6/yv/27M/YqeNeHffreGBeezj388U/3edXufaqrwMt6fy/zP1/5eN/PICWdP5f5v6/Ep1h8o9e6fy/zP1/JTrD5B+90vl/mfv/SnSGyT96pfP/lvX/vb3kGr2/H51h8o9e6fy/n0vy/2jJNXp/PzrD5B+90vl/l8vfsXY+Lv59/n332anPLbremvnc1HWn3p+69r/UN38t99qi3+v+bVztU9dd9P6imt3vBlb1G4iAIE8=
   </data>
  </layer>
  <objectgroup name="Entities">
-  <object id="23" name="Spawn" x="80" y="1952" width="20" height="15"/>
+  <object id="23" name="Spawn1" x="80" y="1952" width="20" height="15"/>
   <object id="46" name="Lamp" gid="31" x="544" y="1952" width="32" height="32"/>
   <object id="47" name="Lamp" gid="31" x="800" y="1952" width="32" height="32"/>
   <object id="51" name="Lamp" gid="31" x="288" y="1952" width="32" height="32"/>
   <object id="68" name="Lamp" gid="31" x="1568" y="1952" width="32" height="32"/>
   <object id="69" name="Lamp" gid="31" x="1312" y="1952" width="32" height="32"/>
   <object id="70" name="Lamp" gid="31" x="1056" y="1952" width="32" height="32"/>
-  <object id="77" name="Chest" gid="187" x="2080" y="2016" width="32" height="32"/>
+  <object id="77" name="Chest" gid="187" x="1952" y="2016" width="32" height="32"/>
+  <object id="101" name="Spawn" x="1196" y="1938.5" width="20" height="15"/>
+  <object id="104" name="Guard" gid="144" x="2208" y="1952" width="32" height="32">
+   <properties>
+    <property name="stepsLeft" type="int" value="10"/>
+    <property name="stepsRight" type="int" value="10"/>
+   </properties>
+  </object>
+  <object id="107" name="Torch" gid="175" x="1952" y="1888" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Physics">
   <object id="15" x="32.5" y="2018.5" width="8171" height="29.5"/>
