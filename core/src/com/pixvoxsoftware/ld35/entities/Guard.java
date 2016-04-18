@@ -32,4 +32,9 @@ public class Guard extends Entity {
     public short getCollisionMask() {
         return WorldConstants.OBSTACLE_CATEGORY | WorldConstants.SOUL_CATEGORY;
     }
+
+    @Override
+    public int renderPass() {
+        return 2;
+    }
 }
