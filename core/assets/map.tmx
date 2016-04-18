@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="121">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="123">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="529" columns="23">
   <image source="tileset.png" width="736" height="736"/>
  </tileset>
+ <layer name="Background" width="256" height="64">
+  <data encoding="base64" compression="zlib">
+   eJzt0EENwDAAA7HyJzOKJbB/osYnmcCd834f8Guh9GNotVD6MbRaKP0YWi2UfgytFko/hlYLpR9Dq4XSj6HVQunH0Gqh9GNotVD6MbRaKP0YWi2UfgytFko/hlYLpR9Dq4XSj6HVQunH0Gqh9GNotVD6MbRaKP0YWi2UfgytFko/hlYLpR9Dq4XSj6HVQunH0Gqh9GNotVD6MbRaKP0YWi2UfgytFko/hlYLpR9Dq4XSj6HVQunH0Gqh9GNotVD6MbRaKP0YWi2UfgytFko/hlYLpR9Dq4XSj6HVQunH0Gqh9GNotVD6MbRaKP0YWi2UfgytFko/hlYLpR9Dq4XSj6HVQunH0Gqh9GNotVD6MbRaKP0YWi2UfgytFko/hlYLpR9Dq4XSj6HVQunH0Gqh9GNotVD6MbRaKP0YWi2UfgytFko/hlYLpR9DK0m7XaoXfCc=
+  </data>
+ </layer>
  <layer name="Tile Layer 1" width="256" height="64">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <objectgroup name="Entities">
@@ -18,14 +23,16 @@
   <object id="70" name="Lamp" gid="31" x="1056" y="1952" width="32" height="32"/>
   <object id="77" name="Chest" gid="187" x="1952" y="2016" width="32" height="32"/>
   <object id="101" name="Spawn" x="1710.75" y="1925.44" width="20" height="15"/>
-  <object id="107" name="Torch" gid="175" x="1952" y="1945.61" width="32" height="32"/>
+  <object id="107" name="Torch" gid="175" x="1952" y="1952" width="32" height="32"/>
   <object id="110" name="GuardSpawn" x="2176" y="1920" width="32" height="32">
    <properties>
     <property name="stepsLeft" type="int" value="0"/>
-    <property name="stepsRight" type="int" value="0"/>
+    <property name="stepsRight" type="int" value="-10"/>
    </properties>
   </object>
   <object id="120" name="Chest" gid="187" x="1952" y="1792" width="32" height="32"/>
+  <object id="121" name="Torch" gid="175" x="2432" y="1952" width="32" height="32"/>
+  <object id="122" name="Torch" gid="175" x="2912" y="1952" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Physics">
   <object id="15" name="BigFloor" x="32.5" y="2018.5" width="8171" height="29.5"/>
