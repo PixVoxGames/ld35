@@ -15,6 +15,12 @@ public class WalkTask extends LeafTask<Guard> {
     @Override
     public void start() {
         getObject().setTargetX(getObject().getX() + getObject().getStepsRight() * direction * 32 / WorldConstants.PIXELS_PER_METER);
+        if (direction == 1f) {
+            ((AnimatedSprite)getObject().getSprite()).setMirroredVertically(true);
+        }
+        else {
+            ((AnimatedSprite)getObject().getSprite()).setMirroredVertically(false);
+        }
         getObject().setState(Guard.State.MOVING);
         if (direction == 1f) {
             ((AnimatedSprite)getObject().getSprite()).setMirroredVertically(true);

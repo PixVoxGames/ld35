@@ -1,9 +1,12 @@
 package com.pixvoxsoftware.ld35.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.pixvoxsoftware.ld35.AnimatedSprite;
 import com.pixvoxsoftware.ld35.GameWorld;
 import com.pixvoxsoftware.ld35.WorldConstants;
+
+import java.util.ArrayList;
 
 public class Guard extends Entity {
 
@@ -12,12 +15,19 @@ public class Guard extends Entity {
     private State state;
     private int stepsLeft, stepsRight;
     private float targetX;
+    private float visionRadius;
 
-    public Guard(GameWorld world, float x, float y, int stepsLeft, int stepsRight) {
+    private AnimatedSprite movingSprite, idleSprite;
+
+    public Guard(GameWorld world, float x, float y, int stepsLeft, int stepsRight, float visionRadius) {
         this.world = world;
-        this.sprite = new AnimatedSprite(Gdx.files.internal("guard.png"), 15, 0.09f);
+        movingSprite = new AnimatedSprite(Gdx.files.internal("guard.png"), 15, 0.09f);
+        idleSprite = new AnimatedSprite(Gdx.files.internal("guard_st.png"), 4, 0.09f);
+        idleSprite.setMirroredVertically(true);
+        this.sprite = movingSprite;
         this.stepsLeft = stepsLeft;
         this.stepsRight = stepsRight;
+        this.visionRadius = visionRadius;
         createPhysicsBody();
         setPosition(x, y);
     }
@@ -44,6 +54,19 @@ public class Guard extends Entity {
 
     public void setTargetX(float targetX) {
         this.targetX = targetX;
+    }
+
+    private ArrayList<Entity> getObjectsAround() {
+        return world.getEntitiesInArea(getX(), getY(), visionRadius);
+    }
+
+    @Override
+    public Sprite getSprite() {
+        if (state == State.IDLE) {
+            return idleSprite;
+        } else {
+            return movingSprite;
+        }
     }
 
     @Override
