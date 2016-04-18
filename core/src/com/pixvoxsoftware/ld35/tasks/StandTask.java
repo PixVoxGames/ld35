@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.math.MathUtils;
-import com.pixvoxsoftware.ld35.Loggers;
 import com.pixvoxsoftware.ld35.entities.Guard;
-import sun.rmi.runtime.Log;
 
 public class StandTask extends LeafTask<Guard> {
 

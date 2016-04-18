@@ -20,6 +20,7 @@ public abstract class Entity {
     public Body physicsBody;
 
     public int groundedChecks = 0;
+    private boolean selected = false;
 
     public boolean isKilled() {
         return killed;
@@ -130,4 +131,12 @@ public abstract class Entity {
     public abstract short getCategory();
     public abstract short getCollisionMask();
     public abstract int renderPass();
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 }

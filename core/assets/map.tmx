@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="123">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="125">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="529" columns="23">
   <image source="tileset.png" width="736" height="736"/>
  </tileset>
@@ -10,7 +10,7 @@
  </layer>
  <layer name="Tile Layer 1" width="256" height="64">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <objectgroup name="Entities">
@@ -26,17 +26,20 @@
   <object id="107" name="Torch" gid="175" x="1952" y="1952" width="32" height="32"/>
   <object id="110" name="GuardSpawn" x="2176" y="1920" width="32" height="32">
    <properties>
-    <property name="stepsLeft" type="int" value="0"/>
-    <property name="stepsRight" type="int" value="-10"/>
+    <property name="speed" type="float" value="2"/>
+    <property name="stepsLeft" type="int" value="8"/>
+    <property name="stepsRight" type="int" value="8"/>
+    <property name="visibilityRadius" type="float" value="0"/>
    </properties>
   </object>
   <object id="120" name="Chest" gid="187" x="1952" y="1792" width="32" height="32"/>
   <object id="121" name="Torch" gid="175" x="2432" y="1952" width="32" height="32"/>
   <object id="122" name="Torch" gid="175" x="2912" y="1952" width="32" height="32"/>
+  <object id="123" name="Torch" gid="175" x="3392" y="1952" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Physics">
   <object id="15" name="BigFloor" x="32.5" y="2018.5" width="8171" height="29.5"/>
-  <object id="84" name="SmallFloor" x="1824" y="1792" width="1504" height="32"/>
+  <object id="84" name="SmallFloor" x="1824" y="1790.98" width="1922.67" height="34.0426"/>
   <object id="88" name="PrisonBigWallLeft" x="1798.67" y="0" width="32" height="1824"/>
   <object id="94" name="WorldWallLeft" x="5.33333" y="5.33333" width="32" height="2048"/>
  </objectgroup>

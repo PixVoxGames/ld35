@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -96,24 +97,22 @@ public class GameScene implements Scene {
         mapRenderer.setView(cam);
         mapRenderer.render();
 
-        /*
-        shaderGlow.begin();
-        shaderGlow.setUniformf("u_viewportInverse", new Vector2(1f / 256, 1f / 256));
-        shaderGlow.setUniformf("u_offset", 1f);
-        shaderGlow.setUniformf("u_step", Math.min(3f, 128/ 70f));
-        shaderGlow.setUniformf("u_color", new Vector3(0x34 / 255f, 0xb5 / 255f, 0x7f / 255f));
-        shaderGlow.end();
-        spriteBatch.setShader(shaderGlow);
-
-        spriteBatch.begin();
-        for (Entity entity : world.getEntities()) {
-            if (entity.isVisible()) {
-                entity.getSprite().draw(spriteBatch);
-            }
-        }
-        spriteBatch.end();
-        spriteBatch.setShader(null);
-        */
+//        shaderGlow.begin();
+//        shaderGlow.setUniformf("u_viewportInverse", new Vector2(1f / 256, 1f / 256));
+//        shaderGlow.setUniformf("u_offset", 1.2f);
+//        shaderGlow.setUniformf("u_step", Math.min(3f, 2f));
+//        shaderGlow.setUniformf("u_color", new Vector3(0x34 / 255f, 0xb5 / 255f, 0x7f / 255f));
+//        shaderGlow.end();
+//        spriteBatch.setShader(shaderGlow);
+//
+//        spriteBatch.begin();
+//        for (Entity entity : world.getEntities()) {
+//            if (entity.isSelected()) {
+//                entity.getSprite().draw(spriteBatch);
+//            }
+//        }
+//        spriteBatch.end();
+//        spriteBatch.setShader(null);
 
         spriteBatch.begin();
         for (int renderPass = 0; renderPass < WorldConstants.MAX_RENDER_PASSES; renderPass++) {

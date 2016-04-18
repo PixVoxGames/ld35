@@ -5,6 +5,7 @@ import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.ai.btree.annotation.TaskAttribute;
 import com.pixvoxsoftware.ld35.AnimatedSprite;
 import com.pixvoxsoftware.ld35.Loggers;
+import com.pixvoxsoftware.ld35.WorldConstants;
 import com.pixvoxsoftware.ld35.entities.Guard;
 
 public class WalkTask extends LeafTask<Guard> {
@@ -13,13 +14,13 @@ public class WalkTask extends LeafTask<Guard> {
 
     @Override
     public void start() {
-        getObject().setTargetX(getObject().getX() + getObject().getStepsRight()*direction);
+        getObject().setTargetX(getObject().getX() + getObject().getStepsRight() * direction * 32 / WorldConstants.PIXELS_PER_METER);
         getObject().setState(Guard.State.MOVING);
         if (direction == 1f) {
-            ((AnimatedSprite)getObject().getSprite()).setMirroredVertically(false);
+            ((AnimatedSprite)getObject().getSprite()).setMirroredVertically(true);
         }
         else {
-            ((AnimatedSprite)getObject().getSprite()).setMirroredVertically(true);
+            ((AnimatedSprite)getObject().getSprite()).setMirroredVertically(false);
         }
     }
 

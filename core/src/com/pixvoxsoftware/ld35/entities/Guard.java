@@ -65,4 +65,10 @@ public class Guard extends Entity {
     public int renderPass() {
         return 1;
     }
+
+    @Override
+    public void createPhysicsBody() {
+        super.createPhysicsBody();
+        physicsBody.setFixedRotation(true);
+    }
 }
