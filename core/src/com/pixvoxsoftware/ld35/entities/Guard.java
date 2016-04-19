@@ -10,14 +10,19 @@ import java.util.ArrayList;
 
 public class Guard extends Entity {
 
-    public enum State {IDLE, MOVING};
+    public enum State {IDLE, MOVING, RAGE}
+    public enum Direction {RIGHT, LEFT};
 
     private State state;
+    private Direction direction;
     private int stepsLeft, stepsRight;
+    private float spawnX, spawnY;
     private float targetX;
     private float visionRadius;
 
     private AnimatedSprite movingSprite, idleSprite;
+
+    private Player target;
 
     public Guard(GameWorld world, float x, float y, int stepsLeft, int stepsRight, float visionRadius) {
         this.world = world;
@@ -28,6 +33,8 @@ public class Guard extends Entity {
         this.stepsLeft = stepsLeft;
         this.stepsRight = stepsRight;
         this.visionRadius = visionRadius;
+        spawnX = x;
+        spawnY = y;
         createPhysicsBody();
         setPosition(x, y);
     }
@@ -40,6 +47,18 @@ public class Guard extends Entity {
         this.state = state;
     }
 
+    public Player getTarget() {
+        return target;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
     public int getStepsLeft() {
         return stepsLeft;
     }
@@ -50,6 +69,14 @@ public class Guard extends Entity {
 
     public float getTargetX() {
         return targetX;
+    }
+
+    public float getSpawnX() {
+        return spawnX;
+    }
+
+    public float getSpawnY() {
+        return spawnY;
     }
 
     public void setTargetX(float targetX) {

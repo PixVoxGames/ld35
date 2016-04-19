@@ -2,6 +2,7 @@ package com.pixvoxsoftware.ld35.controllers;
 
 import com.badlogic.gdx.ai.btree.BehaviorTree;
 import com.badlogic.gdx.math.Vector2;
+import com.pixvoxsoftware.ld35.AnimatedSprite;
 import com.pixvoxsoftware.ld35.Loggers;
 import com.pixvoxsoftware.ld35.WorldConstants;
 import com.pixvoxsoftware.ld35.entities.Entity;
@@ -30,7 +31,21 @@ public class GuardController extends EntityController {
             }
         }
         behaviorTree.step();
+        if (Math.signum(guard.getTargetX() - guard.getX()) == 1 && guard.getDirection() != Guard.Direction.RIGHT) {
+            guard.setDirection(Guard.Direction.RIGHT);
+            AnimatedSprite tmp = (AnimatedSprite)guard.getSprite();
+            if (!tmp.isMirroredVertically()) {
+                tmp.setMirroredVertically(true);
+            }
+        } else if (Math.signum(guard.getTargetX() - guard.getX()) == -1 && guard.getDirection() != Guard.Direction.LEFT) {
+            guard.setDirection(Guard.Direction.LEFT);
+            AnimatedSprite tmp = (AnimatedSprite)guard.getSprite();
+            if (tmp.isMirroredVertically()) {
+                tmp.setMirroredVertically(false);
+            }
+        }
         if (guard.getState() == Guard.State.MOVING) {
+
             float impulseX = guard.physicsBody.getMass() * (WorldConstants.PLAYER_MAX_X_VELOCITY * Math.signum(guard.getTargetX() - guard.getX()) - guard.physicsBody.getLinearVelocity().x);
             guard.physicsBody.applyLinearImpulse(new Vector2(impulseX, 0), guard.physicsBody.getWorldCenter(), true);
         } else {
