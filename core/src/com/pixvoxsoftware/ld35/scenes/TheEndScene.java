@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
@@ -15,15 +16,23 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import java.util.ArrayList;
 
 public class TheEndScene implements Scene {
-    private TextButton startNewGameButton;
+    private enum SceneState {
+        PLAYING,
+        RESTART,
+        EXIT,
+    }
+    private TextButton restartGameButton;
+    private TextButton exitGameButton;
+    private Label resultLabel;
     private Texture texture;
     private SpriteBatch spriteBatch;
     private BitmapFont coolFont;
+    private BitmapFont coolFontSmall;
     private BitmapFont font;
     private Stage stage;
     private ArrayList<String> strings = new ArrayList<>();
     private ArrayList<Float> sizes = new ArrayList<>();
-    private boolean checked = false;
+    private SceneState state = SceneState.PLAYING;
 
     public TheEndScene(boolean positive) {
         if (positive) {
@@ -33,7 +42,7 @@ public class TheEndScene implements Scene {
         }
         spriteBatch = new SpriteBatch();
         coolFont = new BitmapFont(Gdx.files.internal("fonts/cool_font.fnt"));
-        coolFont.setColor(1, 1, 1, 1);
+        coolFontSmall = new BitmapFont(Gdx.files.internal("fonts/cool_font_small.fnt"));
         font = new BitmapFont(Gdx.files.internal("fonts/arial-15.fnt"));
         font.setColor(1, 1, 1, 1);
 
@@ -47,23 +56,49 @@ public class TheEndScene implements Scene {
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-        TextButton.TextButtonStyle textStyle = new TextButton.TextButtonStyle();
-        textStyle.font = coolFont;
-        textStyle.overFontColor = Color.WHITE;
-        textStyle.fontColor = new Color(1, 228f / 255f, 181f / 255f, 1);
+
         if (!positive) {
-            startNewGameButton = new TextButton("YOU DIED!", textStyle);
+            resultLabel = createLabel("YOU DIED", coolFont);
         } else {
-            startNewGameButton = new TextButton("THE HAPPY END", textStyle);
+            resultLabel = createLabel("THE HAPPY END", coolFont);
         }
-        startNewGameButton.addListener(new ChangeListener() {
+        resultLabel.setPosition(Gdx.graphics.getWidth() / 2 - resultLabel.getWidth() / 2, stage.getHeight() / 5);
+
+        restartGameButton = createButton("RESTART", coolFontSmall);
+        restartGameButton.setPosition(Gdx.graphics.getWidth() / 2 - restartGameButton.getWidth() / 2, stage.getHeight() / 5 - 40);
+        restartGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                checked = true;
+                state = SceneState.RESTART;
             }
         });
-        stage.addActor(startNewGameButton);
-        startNewGameButton.setPosition(Gdx.graphics.getWidth() / 2 - startNewGameButton.getWidth() / 2, stage.getHeight() / 7);
+        exitGameButton = createButton("EXIT", coolFontSmall);
+        exitGameButton.setPosition(Gdx.graphics.getWidth() / 2 - exitGameButton.getWidth() / 2, restartGameButton.getY() - 40);
+        exitGameButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                state = SceneState.EXIT;
+            }
+        });
+
+        stage.addActor(resultLabel);
+        stage.addActor(restartGameButton);
+        stage.addActor(exitGameButton);
+    }
+
+    private TextButton createButton(String text, BitmapFont font) {
+        TextButton.TextButtonStyle textStyle = new TextButton.TextButtonStyle();
+        textStyle.font = font;
+        textStyle.overFontColor = Color.WHITE;
+        textStyle.fontColor = new Color(1, 228f / 255f, 181f / 255f, 1);
+        return new TextButton(text, textStyle);
+    }
+
+    private Label createLabel(String text, BitmapFont font) {
+        Label.LabelStyle textStyle = new Label.LabelStyle();
+        textStyle.font = font;
+        textStyle.fontColor = new Color(1, 228f / 255f, 181f / 255f, 1);
+        return new Label(text, textStyle);
     }
 
     private void addStrings(BitmapFont font, String[] strings) {
@@ -90,8 +125,10 @@ public class TheEndScene implements Scene {
 
     @Override
     public Scene nextScene() {
-        if (checked) {
+        if (state == SceneState.EXIT) {
             return new End();
+        } else if (state == SceneState.RESTART) {
+            return new GameScene();
         }
         return null;
     }

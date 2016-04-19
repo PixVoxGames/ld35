@@ -15,22 +15,31 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import java.util.ArrayList;
 
 public class MainMenuScene implements Scene {
+
+
+    private enum SceneState {
+        PLAYING,
+        EXIT,
+        NEW_GAME;
+
+    }
+    private TextButton exitGameButton;
     private TextButton startNewGameButton;
     private Texture texture;
     private SpriteBatch spriteBatch;
+    private BitmapFont coolFontSmall;
     private BitmapFont coolFont;
     private BitmapFont font;
     private Stage stage;
     private ArrayList<String> strings = new ArrayList<>();
     private ArrayList<Float> sizes = new ArrayList<>();
-    private boolean isNewGameHovered = false;
-    private boolean checked = false;
+    private SceneState state = SceneState.PLAYING;
 
     public MainMenuScene() {
         texture = new Texture(Gdx.files.internal("the_beginning2.png"));
         spriteBatch = new SpriteBatch();
         coolFont = new BitmapFont(Gdx.files.internal("fonts/cool_font.fnt"));
-        coolFont.setColor(1, 1, 1, 1);
+        coolFontSmall = new BitmapFont(Gdx.files.internal("fonts/cool_font_small.fnt"));
         font = new BitmapFont(Gdx.files.internal("fonts/arial-15.fnt"));
         font.setColor(1, 1, 1, 1);
 
@@ -44,19 +53,27 @@ public class MainMenuScene implements Scene {
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-        TextButton.TextButtonStyle textStyle = new TextButton.TextButtonStyle();
-        textStyle.font = coolFont;
-        textStyle.overFontColor = Color.WHITE;
-        textStyle.fontColor = new Color(1, 228f / 255f, 181f / 255f, 1);
-        startNewGameButton = new TextButton("START GAME", textStyle);
+
+        startNewGameButton = createButton("START GAME", coolFont);
         startNewGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                checked = true;
+                state = SceneState.NEW_GAME;
             }
         });
-        stage.addActor(startNewGameButton);
         startNewGameButton.setPosition(Gdx.graphics.getWidth() / 2 - startNewGameButton.getWidth() / 2, stage.getHeight() / 7);
+
+        exitGameButton = createButton("EXIT", coolFontSmall);
+        exitGameButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                state = SceneState.EXIT;
+            }
+        });
+        exitGameButton.setPosition(Gdx.graphics.getWidth() / 2 - exitGameButton.getWidth() / 2, startNewGameButton.getY() - 40);
+
+        stage.addActor(startNewGameButton);
+        stage.addActor(exitGameButton);
     }
 
     private void addStrings(BitmapFont font, String[] strings) {
@@ -66,6 +83,14 @@ public class MainMenuScene implements Scene {
             this.strings.add(string);
             this.sizes.add(layout.width);
         }
+    }
+
+    private TextButton createButton(String text, BitmapFont font) {
+        TextButton.TextButtonStyle textStyle = new TextButton.TextButtonStyle();
+        textStyle.font = font;
+        textStyle.overFontColor = Color.WHITE;
+        textStyle.fontColor = new Color(1, 228f / 255f, 181f / 255f, 1);
+        return new TextButton(text, textStyle);
     }
 
     @Override
@@ -83,8 +108,10 @@ public class MainMenuScene implements Scene {
 
     @Override
     public Scene nextScene() {
-        if (checked) {
+        if (state == SceneState.NEW_GAME) {
             return new TheBeginningScene();
+        } else if (state == SceneState.EXIT) {
+            return new End();
         }
         return null;
     }

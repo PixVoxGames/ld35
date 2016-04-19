@@ -14,7 +14,7 @@ public class Game extends ApplicationAdapter {
 		currentScene = new MainMenuScene();
 //		currentScene = new TheBeginningScene();
 //        currentScene = new GameScene();
-//		currentScene = new TheEndScene();
+//		currentScene = new TheEndScene(true);
 	}
 
 	@Override
