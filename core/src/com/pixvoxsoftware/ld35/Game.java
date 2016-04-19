@@ -3,8 +3,7 @@ package com.pixvoxsoftware.ld35;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.pixvoxsoftware.ld35.scenes.*;
 
 public class Game extends ApplicationAdapter {
 
@@ -13,7 +12,9 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create () {
         currentScene = new GameScene();
-        Gdx.input.setInputProcessor(currentScene);
+//		currentScene = new TheBeginningScene();
+//		currentScene = new MainMenuScene();
+//		currentScene = new TheEndScene();
 	}
 
 	@Override
@@ -22,5 +23,12 @@ public class Game extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         currentScene.draw();
+
+		Scene newScene = currentScene.nextScene();
+		if (newScene instanceof End) {
+			Gdx.app.exit();
+		} else if (newScene != null) {
+			currentScene = newScene;
+		}
 	}
 }

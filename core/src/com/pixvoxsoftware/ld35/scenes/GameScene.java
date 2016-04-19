@@ -1,4 +1,4 @@
-package com.pixvoxsoftware.ld35;
+package com.pixvoxsoftware.ld35.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,10 +9,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.pixvoxsoftware.ld35.*;
 import com.pixvoxsoftware.ld35.entities.Entity;
 
 
@@ -39,6 +38,7 @@ public class GameScene implements Scene {
     private float SCREEN_WIDTH, SCREEN_HEIGHT;
 
     public GameScene() {
+        Gdx.input.setInputProcessor(this);
         spriteBatch = new SpriteBatch();
         fontBatch = new SpriteBatch();
         staticSpritesBatch = new SpriteBatch();
@@ -134,6 +134,11 @@ public class GameScene implements Scene {
         if (renderDebugText) {
             drawDebugText();
         }
+    }
+
+    @Override
+    public Scene nextScene() {
+        return null;
     }
 
     private void drawDebugText() {
