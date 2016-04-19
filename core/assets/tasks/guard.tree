@@ -11,7 +11,7 @@ import murder:"com.pixvoxsoftware.ld35.tasks.MurderTask"
 
 # Tree definition (note that root is optional)
 root
-  selector
+  dynamicGuardSelector
     (checkTask) murder
     sequence
       home

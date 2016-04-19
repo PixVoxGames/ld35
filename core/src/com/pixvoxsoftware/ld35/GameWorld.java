@@ -111,7 +111,7 @@ public class GameWorld {
                         Guard guard = new Guard(this, rectangleMapObject.getRectangle().getX() / WorldConstants.PIXELS_PER_METER,
                                 rectangleMapObject.getRectangle().getY() / WorldConstants.PIXELS_PER_METER,
                                 Integer.valueOf((String)rectangleMapObject.getProperties().get("stepsLeft")),
-                                Integer.valueOf((String)rectangleMapObject.getProperties().get("stepsRight")), 3f);
+                                Integer.valueOf((String)rectangleMapObject.getProperties().get("stepsRight")), 4f);
 
                         BehaviorTree<Guard> tree = libraryManager.createBehaviorTree("tasks/guard.tree", guard);
                         tree.setObject(guard);
