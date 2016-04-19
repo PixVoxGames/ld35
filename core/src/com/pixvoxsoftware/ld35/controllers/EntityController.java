@@ -5,7 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.pixvoxsoftware.ld35.WorldConstants;
 import com.pixvoxsoftware.ld35.entities.Entity;
 
-public abstract class EntityController {
+public class EntityController {
+    public static EntityController instance = new EntityController();
+
     public void act(Entity entity) {
         if (entity.physicsBody != null) {
             Vector2 position = entity.physicsBody.getTransform().getPosition();
@@ -14,6 +16,10 @@ public abstract class EntityController {
         }
     };
 
-    public abstract boolean onKeyPressed(Entity entity, int keycode);
-    public abstract boolean onKeyReleased(Entity entity, int keycode);
+    public boolean onKeyPressed(Entity entity, int keycode) {
+        return false;
+    }
+    public boolean onKeyReleased(Entity entity, int keycode) {
+        return false;
+    }
 }

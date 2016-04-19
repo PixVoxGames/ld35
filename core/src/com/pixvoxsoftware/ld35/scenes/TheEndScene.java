@@ -23,11 +23,14 @@ public class TheEndScene implements Scene {
     private Stage stage;
     private ArrayList<String> strings = new ArrayList<>();
     private ArrayList<Float> sizes = new ArrayList<>();
-    private boolean isNewGameHovered = false;
     private boolean checked = false;
 
-    public TheEndScene() {
-        texture = new Texture(Gdx.files.internal("the_beginning2.png"));
+    public TheEndScene(boolean positive) {
+        if (positive) {
+            texture = new Texture(Gdx.files.internal("the_beginning2.png"));
+        } else {
+            texture = new Texture(Gdx.files.internal("story2.png"));
+        }
         spriteBatch = new SpriteBatch();
         coolFont = new BitmapFont(Gdx.files.internal("fonts/cool_font.fnt"));
         coolFont.setColor(1, 1, 1, 1);
@@ -48,7 +51,11 @@ public class TheEndScene implements Scene {
         textStyle.font = coolFont;
         textStyle.overFontColor = Color.WHITE;
         textStyle.fontColor = new Color(1, 228f / 255f, 181f / 255f, 1);
-        startNewGameButton = new TextButton("THE END", textStyle);
+        if (!positive) {
+            startNewGameButton = new TextButton("YOU DIED!", textStyle);
+        } else {
+            startNewGameButton = new TextButton("THE HAPPY END", textStyle);
+        }
         startNewGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

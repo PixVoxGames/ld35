@@ -32,7 +32,7 @@ public class GameScene implements Scene {
     private ParallaxBackground background;
 
     private GameWorld world;
-    private boolean renderDebugText = true;
+    private boolean renderDebugText = false;
     private boolean renderDebugPhysics = false;
 
     private float SCREEN_WIDTH, SCREEN_HEIGHT;
@@ -138,6 +138,11 @@ public class GameScene implements Scene {
 
     @Override
     public Scene nextScene() {
+        if (world.getPlayer().isKilled()) {
+            return new TheEndScene(false);
+        } else if (world.isMerlinFound()) {
+            return new TheEndScene(true);
+        }
         return null;
     }
 

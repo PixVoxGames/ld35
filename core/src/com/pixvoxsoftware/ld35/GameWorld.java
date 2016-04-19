@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.pixvoxsoftware.ld35.controllers.EntityController;
@@ -33,6 +34,7 @@ public class GameWorld {
     private float accumulator;
     public World physicsWorld;
     public RayHandler rayHandler = null;
+    private Merlin merlin;
 
     public GameWorld() {
         physicsWorld = new World(gravity, true);
@@ -117,6 +119,11 @@ public class GameWorld {
                         tree.setObject(guard);
                         guard.setController(new GuardController(tree));
                         addEntity(guard);
+                    } else if (rectangleMapObject.getName().equals("MerlinSpawn")) {
+                        Rectangle rectangle = rectangleMapObject.getRectangle();
+                        Loggers.game.debug("merlin found at {} {}", rectangle.getX() / WorldConstants.PIXELS_PER_METER, rectangle.getY() / WorldConstants.PIXELS_PER_METER);
+                        merlin = new Merlin(this, rectangle.getX() / WorldConstants.PIXELS_PER_METER, rectangle.getY() / WorldConstants.PIXELS_PER_METER);
+                        addEntity(merlin);
                     }
                 } else {
                     Loggers.game.debug("unknown tile: {}", mapObject.getName());
@@ -204,7 +211,9 @@ public class GameWorld {
                 "player grounded: " + Boolean.toString(player.isOnGround()),
                 "player direction: " + player.getDirection(),
                 "player state: " + player.getState().toString(),
-                "player alive: " + !player.isKilled()
+                "player alive: " + !player.isKilled(),
+                "Merlin x: " + Float.toString(merlin.getSprite().getX()),
+                "Merlin y: " + Float.toString(merlin.getSprite().getY()),
         };
     }
     public float getHeight() {
@@ -225,5 +234,9 @@ public class GameWorld {
             }
         }
         return entities;
+    }
+
+    public boolean isMerlinFound() {
+        return merlin.getPosition().sub(player.getPosition()).len() <= WorldConstants.MIN_DISTANCE_TO_MERLIN;
     }
 }
