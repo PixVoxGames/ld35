@@ -161,13 +161,13 @@ public class GameScene implements Scene {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.F5) {
-            renderDebugText = !renderDebugText;
-            return true;
-        } else if (keycode == Input.Keys.F6) {
-            renderDebugPhysics= !renderDebugPhysics;
-            return true;
-        }
+//        if (keycode == Input.Keys.F5) {
+//            renderDebugText = !renderDebugText;
+//            return true;
+//        } else if (keycode == Input.Keys.F6) {
+//            renderDebugPhysics= !renderDebugPhysics;
+//            return true;
+//        }
         return world.onKeyPressed(keycode);
     }
 
