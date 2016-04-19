@@ -112,24 +112,24 @@
   <object id="171" x="3424" y="640" width="1376" height="32"/>
   <object id="175" x="4064" y="1600" width="256" height="32"/>
   <object id="193" x="3264" y="800" width="128" height="128"/>
-  <object id="194" x="3296" y="672" width="96" height="96"/>
-  <object id="195" x="3200" y="544" width="224" height="128"/>
+  <object id="194" x="3296" y="672" width="96" height="82.6667"/>
+  <object id="195" x="3200" y="544" width="224" height="113.333"/>
   <object id="196" x="3392" y="384" width="64" height="160"/>
   <object id="197" x="3328" y="352" width="96" height="32"/>
-  <object id="198" x="2976" y="384" width="384" height="128"/>
-  <object id="199" x="3008" y="512" width="96" height="32"/>
-  <object id="200" x="2880" y="448" width="64" height="320"/>
-  <object id="201" x="2944" y="544" width="32" height="64"/>
+  <object id="198" x="2976" y="384" width="378.667" height="112"/>
+  <object id="199" x="3008" y="495.333" width="96" height="32"/>
+  <object id="200" x="2880" y="448" width="60" height="320"/>
+  <object id="201" x="2944" y="544" width="24.6667" height="64"/>
   <object id="202" x="2976" y="576" width="160" height="32"/>
-  <object id="203" x="3136" y="544" width="32" height="160"/>
-  <object id="204" x="3136" y="704" width="128" height="96"/>
-  <object id="205" x="2624" y="352" width="128" height="160"/>
-  <object id="207" x="2752" y="384" width="224" height="32"/>
-  <object id="208" x="2272" y="320" width="352" height="32"/>
-  <object id="209" x="2240" y="320" width="32" height="192"/>
-  <object id="210" x="2176" y="480" width="64" height="32"/>
+  <object id="203" x="3140.5" y="544" width="22.1667" height="160"/>
+  <object id="204" x="3136" y="704" width="120.667" height="96"/>
+  <object id="205" x="2624" y="352" width="128" height="144.667"/>
+  <object id="207" x="2752" y="384" width="224" height="18.6667"/>
+  <object id="208" x="2272" y="320" width="352" height="16.6667"/>
+  <object id="209" x="2240" y="320" width="32" height="176.667"/>
+  <object id="210" x="2176" y="480" width="64" height="17.3333"/>
   <object id="211" x="2144" y="480" width="32" height="448"/>
-  <object id="212" x="2208" y="544" width="320" height="384"/>
+  <object id="212" x="2216" y="544" width="312" height="384"/>
   <object id="214" x="2528" y="768" width="96" height="160"/>
   <object id="215" x="2592" y="544" width="288" height="224"/>
   <object id="216" x="2112" y="928" width="32" height="256"/>
