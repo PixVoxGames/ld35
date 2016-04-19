@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="125">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="32" tileheight="32" nextobjectid="179">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="529" columns="23">
   <image source="tileset.png" width="736" height="736"/>
  </tileset>
@@ -10,7 +10,7 @@
  </layer>
  <layer name="Tile Layer 1" width="256" height="64">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <objectgroup name="Entities">
@@ -32,15 +32,48 @@
     <property name="visibilityRadius" type="float" value="0"/>
    </properties>
   </object>
-  <object id="120" name="Chest" gid="187" x="1952" y="1792" width="32" height="32"/>
+  <object id="120" name="Chest" gid="187" x="3456" y="928" width="32" height="32"/>
   <object id="121" name="Torch" gid="175" x="2432" y="1952" width="32" height="32"/>
   <object id="122" name="Torch" gid="175" x="2912" y="1952" width="32" height="32"/>
   <object id="123" name="Torch" gid="175" x="3392" y="1952" width="32" height="32"/>
+  <object id="136" name="Torch" gid="175" x="4416" y="1472" width="32" height="32"/>
+  <object id="137" name="Torch" gid="175" x="4416" y="1152" width="32" height="32"/>
+  <object id="167" name="GuardSpawn" x="4192" y="832" width="32" height="32">
+   <properties>
+    <property name="speed" type="float" value="2"/>
+    <property name="stepsLeft" type="int" value="2"/>
+    <property name="stepsRight" type="int" value="2"/>
+    <property name="visibilityRadius" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="168" name="Lamp" gid="31" x="4736" y="864" width="32" height="32"/>
+  <object id="169" name="Lamp" gid="31" x="4576" y="864" width="32" height="32"/>
+  <object id="176" name="MerlinSpawn" x="1408" y="1920"/>
  </objectgroup>
  <objectgroup name="Physics">
   <object id="15" name="BigFloor" x="32.5" y="2018.5" width="8171" height="29.5"/>
   <object id="84" name="SmallFloor" x="1824" y="1790.98" width="1922.67" height="34.0426"/>
   <object id="88" name="PrisonBigWallLeft" x="1798.67" y="0" width="32" height="1824"/>
   <object id="94" name="WorldWallLeft" x="5.33333" y="5.33333" width="32" height="2048"/>
+  <object id="126" x="3808" y="1984" width="64" height="32"/>
+  <object id="127" x="3872" y="1952" width="64" height="32"/>
+  <object id="128" x="3936" y="1920" width="64" height="32"/>
+  <object id="129" x="4000" y="1888" width="64" height="32"/>
+  <object id="130" x="4064" y="1856" width="64" height="32"/>
+  <object id="133" x="4128" y="1824" width="64" height="32"/>
+  <object id="134" x="4192" y="1792" width="64" height="32"/>
+  <object id="149" x="4320" y="928" width="47.5" height="704"/>
+  <object id="150" x="3424" y="928" width="896" height="32"/>
+  <object id="152" x="4800" y="0" width="32" height="2016"/>
+  <object id="153" x="4480" y="928" width="320" height="704"/>
+  <object id="154" x="4768" y="1632" width="32" height="160"/>
+  <object id="155" x="4256" y="1792" width="544" height="32"/>
+  <object id="157" x="3744" y="1760" width="64" height="32"/>
+  <object id="158" x="3808" y="1728" width="64" height="32"/>
+  <object id="159" x="3872" y="1696" width="64" height="32"/>
+  <object id="160" x="3936" y="1664" width="64" height="32"/>
+  <object id="161" x="4000" y="1632" width="64" height="32"/>
+  <object id="171" x="3424" y="640" width="1376" height="32"/>
+  <object id="175" x="4064" y="1600" width="256" height="32"/>
  </objectgroup>
 </map>
