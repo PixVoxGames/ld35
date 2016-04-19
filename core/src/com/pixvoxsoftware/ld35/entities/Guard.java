@@ -47,6 +47,10 @@ public class Guard extends Entity {
         this.state = state;
     }
 
+    public void setTarget(Player target) {
+        this.target = target;
+    }
+
     public Player getTarget() {
         return target;
     }

@@ -22,14 +22,18 @@ public class GuardController extends EntityController {
     public void act(Entity entity) {
         super.act(entity);
         Guard guard = (Guard) entity;
+        Player player = null;
         for (Entity entity1 : guard.getObjectsAround()) {
             if (entity1 instanceof Player) {
-                Player player = (Player) entity1;
+                player = (Player) entity1;
                 if (player.getConsumedSoul() == null || !player.getConsumedSoul().physicsBody.getLinearVelocity().equals(Vector2.Zero)) {
                     Loggers.game.debug("ALERT! HOSTILE DETECTED");
+                } else {
+                    player = null;
                 }
             }
         }
+        guard.setTarget(player);
         behaviorTree.step();
         if (Math.signum(guard.getTargetX() - guard.getX()) == 1 && guard.getDirection() != Guard.Direction.RIGHT) {
             guard.setDirection(Guard.Direction.RIGHT);
