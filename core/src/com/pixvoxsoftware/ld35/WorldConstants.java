@@ -16,4 +16,5 @@ public class WorldConstants {
     public static final float MIN_CONSUMING_DISTANCE = 0.5f;
     public static final float PLAYER_CONSUMING_SPEED = 60f;
     public static final float MIN_DISTANCE_TO_MERLIN = 1f;
+    public static final float MIN_VELOCITY_TO_ALARM = 0.01f;
 }

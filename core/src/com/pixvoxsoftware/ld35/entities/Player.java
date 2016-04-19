@@ -1,6 +1,7 @@
 package com.pixvoxsoftware.ld35.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.pixvoxsoftware.ld35.AnimatedSprite;
 import com.pixvoxsoftware.ld35.GameWorld;
 import com.pixvoxsoftware.ld35.WorldConstants;
@@ -81,5 +82,14 @@ public class Player extends Entity {
     @Override
     public int renderPass() {
         return 1;
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        if (consumedSoul != null) {
+            return consumedSoul.getPosition();
+        } else {
+            return super.getPosition();
+        }
     }
 }

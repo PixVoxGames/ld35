@@ -125,4 +125,8 @@ public class Guard extends Entity {
         super.createPhysicsBody();
         physicsBody.setFixedRotation(true);
     }
+
+    public float getVisionRadius() {
+        return visionRadius;
+    }
 }
