@@ -17,7 +17,7 @@ public class Guard extends Entity {
     private Direction direction;
     private int stepsLeft, stepsRight;
     private float spawnX, spawnY;
-    private float targetX;
+    private float targetX, targetY;
     private float visionRadius;
 
     private AnimatedSprite movingSprite, idleSprite;
@@ -75,6 +75,10 @@ public class Guard extends Entity {
         return targetX;
     }
 
+    public float getTargetY() {
+        return targetY;
+    }
+
     public float getSpawnX() {
         return spawnX;
     }
@@ -87,8 +91,12 @@ public class Guard extends Entity {
         this.targetX = targetX;
     }
 
+    public void setTargetY(float targetY) {
+        this.targetY = targetY;
+    }
+
     public ArrayList<Entity> getObjectsAround() {
-        return world.getEntitiesInArea(getX(), getY(), visionRadius);
+        return world.getEntitiesInArea(getX() + getSprite().getWidth() * 32  / (2 * WorldConstants.PIXELS_PER_METER), getY(), visionRadius);
     }
 
     @Override

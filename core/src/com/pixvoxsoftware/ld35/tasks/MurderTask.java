@@ -8,7 +8,9 @@ public class MurderTask extends LeafTask<Guard> {
     @Override
     public Status execute() {
         if (getObject().getTarget() != null) {
-            if (Math.abs(getObject().getTarget().getSprite().getX() - getObject().getX()) < 2f) {
+            getObject().setState(Guard.State.MOVING);
+            if (Math.abs(getObject().getTarget().getSprite().getX() - getObject().getX()) < 1.5f &&
+                    Math.abs(getObject().getTarget().getSprite().getY() - getObject().getY()) < 1.5f) {
                 getObject().getTarget().kill();
                 return Status.SUCCEEDED;
             }
