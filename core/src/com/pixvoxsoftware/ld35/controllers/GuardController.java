@@ -28,6 +28,8 @@ public class GuardController extends EntityController {
                 player = (Player) entity1;
                 if (player.getConsumedSoul() == null || !player.getConsumedSoul().physicsBody.getLinearVelocity().equals(Vector2.Zero)) {
                     Loggers.game.debug("ALERT! HOSTILE DETECTED");
+                    guard.setTargetX(player.getSprite().getX());
+                    guard.setTargetY(player.getSprite().getY());
                 } else {
                     player = null;
                 }

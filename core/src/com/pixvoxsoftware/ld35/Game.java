@@ -12,7 +12,7 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create () {
 		currentScene = new MainMenuScene();
-//		currentScene = new TheBeginningScene();
+//		currentScene = new TheBeginningScene(`);
 //        currentScene = new GameScene();
 //		currentScene = new TheEndScene(true);
 	}
