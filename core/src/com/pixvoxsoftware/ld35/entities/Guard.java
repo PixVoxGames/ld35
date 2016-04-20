@@ -27,7 +27,7 @@ public class Guard extends Entity {
     public Guard(GameWorld world, float x, float y, int stepsLeft, int stepsRight, float visionRadius) {
         this.world = world;
         movingSprite = new AnimatedSprite(Gdx.files.internal("guard.png"), 15, 0.09f);
-        idleSprite = new AnimatedSprite(Gdx.files.internal("guard_st.png"), 4, 0.09f);
+        idleSprite = new AnimatedSprite(Gdx.files.internal("guard_st.png"), 6, 0.09f);
         idleSprite.setMirroredVertically(true);
         this.sprite = movingSprite;
         this.stepsLeft = stepsLeft;
